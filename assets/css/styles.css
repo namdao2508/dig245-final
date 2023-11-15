@@ -1,2 +1,12 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: black;
+}
 
-/* css */
+.box{
+    background-color: rgb(30, 33, 36);
+}
+
+#stockName{
+    margin-top: 3%;
+}
