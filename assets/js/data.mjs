@@ -4,52 +4,66 @@ const stockData = [
       symbol: 'BPC',
       industry: 'Biotechnology',
       description: 'Leading the way in innovative biopharmaceutical research and development.',
-      cost: 235
+      cost: 235,
+      data: [],
+      owned: 0
     },
     { 
       name: 'CloudCom Systems',
       symbol: 'CCS',
       industry: 'Technology',
       description: 'A cutting-edge technology company providing cloud-based solutions for businesses.',
-      cost: 70
+      cost: 70,
+      data: [],
+      owned: 0
     },
     { 
       name: 'DeltaEnergy Ltd.',
       symbol: 'DEL',
       industry: 'Energy',
       description: 'A key player in the energy sector, specializing in sustainable and efficient energy production.',
-      cost: 325
+      cost: 325,
+      data: [],
+      owned: 0
     },
     { 
       name: 'EcoFoods Group',
       symbol: 'EFG',
       industry: 'Food and Beverage',
       description: 'Dedicated to providing eco-friendly and sustainable food and beverage products.',
-      cost: 107
+      cost: 107,
+      data: [],
+      owned: 0
     },
     { 
       name: 'Fusion Motors Inc.',
       symbol: 'FMI',
       industry: 'Automotive',
       description: 'Innovators in the automotive industry, creating cutting-edge and environmentally friendly vehicles.',
-      cost: 135
+      cost: 135,
+      data: [],
+      owned: 0
     },
     { 
       name: 'GreenTech Solutions',
       symbol: 'GTS',
       industry: 'Renewable Energy',
       description: 'Pioneering sustainable solutions in renewable energy to combat climate change.',
-      cost: 98
+      cost: 98,
+      data: [],
+      owned: 0
     }
   ];  
 
 const marketFunds = [
     {
       name: "Tech Innovators Fund",
-      industry: "Information Technology",
+      industry: "Technology",
       description: "Invest in leading technology companies driving innovation and growth.",
       riskLevel: "Moderate-High",
       cost: 1000,
+      data: [],
+      owned: 0
     },
     {
       name: "Healthcare Growth Fund",
@@ -57,6 +71,8 @@ const marketFunds = [
       description: "Support healthcare breakthroughs and advancements with this fund.",
       riskLevel: "Moderate",
       cost: 545,
+      data: [],
+      owned: 0
     },
     {
       name: "Global Real Estate Opportunities Fund",
@@ -64,6 +80,8 @@ const marketFunds = [
       description: "Diversify your portfolio with global real estate investments.",
       riskLevel: "Moderate",
       cost: 267,
+      data: [],
+      owned: 0
     },
     {
       name: "Sustainable Future Fund",
@@ -71,6 +89,8 @@ const marketFunds = [
       description: "Invest in companies committed to Environmental, Social, and Governance principles.",
       riskLevel: "Low-Moderate",
       cost: 35,
+      data: [],
+      owned: 0
     },
     {
       name: "Energy Leaders Fund",
@@ -78,6 +98,8 @@ const marketFunds = [
       description: "Participate in the growth of leading energy and oil companies.",
       riskLevel: "High",
       cost: 98,
+      data: [],
+      owned: 0
     },
     {
       name: "Financial Services Fund",
@@ -85,16 +107,20 @@ const marketFunds = [
       description: "Strengthen your portfolio with stable and reliable financial industry investments.",
       riskLevel: "Moderate",
       cost: 132,
+      data: [],
+      owned: 0
     },
   ];
 
   const bonds = [
     {
       name: "Tech Innovators Corp",
-      industry: "Information Technology",
+      industry: "Technology",
       cost: 1000,
       yield: 3.8,
       rating: "AAA",
+      data: [],
+      owned: 0
     },
     {
       name: "EcoSolutions Green Bond",
@@ -102,6 +128,8 @@ const marketFunds = [
       cost: 1500,
       yield: 4.2,
       rating: "AA",
+      data: [],
+      owned: 0
     },
   ];
 
@@ -134,9 +162,9 @@ const marketFunds = [
   ];
 
 const usedStockStories = Array.from({ length: stockNews.length }, () => false);
-  
+
 const industryNewsWithBondEffect = [
-    { industry: "Information Technology", news: "Cybersecurity legislation enhances data protection, boosting tech sector confidence.", sentiment: "positive", affectsBondPrice: "neutral" },
+    { industry: "Technology", news: "Cybersecurity legislation enhances data protection, boosting tech sector confidence.", sentiment: "positive", affectsBondPrice: "neutral" },
     { industry: "Healthcare", news: "New monetary policies allocate funds for telemedicine infrastructure, supporting healthcare innovation.", sentiment: "positive", affectsBondPrice: "positive" },
     { industry: "Real Estate", news: "Fiscal policies incentivize green building projects, driving sustainable real estate development.", sentiment: "positive", affectsBondPrice: "positive" },
     { industry: "ESG", news: "Increased government spending in ESG initiatives attracts socially responsible investors.", sentiment: "positive", affectsBondPrice: "positive" },
@@ -154,101 +182,105 @@ const industryNewsWithBondEffect = [
     { industry: "ESG", news: "Companies prioritize diversity and inclusion initiatives, aligning with ESG principles.", sentiment: "positive", affectsBondPrice: "positive" },
   ];
 
-const usedIndustryStories = Array.from({ length: industryNews.length }, () => false);
+const usedIndustryStories = Array.from({ length: industryNewsWithBondEffect.length }, () => false);
 
-function getStockStories(){
+export function getStockStories(){
     return {stockNews, usedStockStories};
 }
 
-function getIndustryNews(){
-    return {industryNewsWithBondEffectk, usedIndustryStories};
+export function getIndustryNews(){
+    return {industryNewsWithBondEffect, usedIndustryStories};
 }
 
-function getStock(index){
+export function getStock(){
     return stockData;
 }
 
-function getMarketFund(index){
+export function getMarketFund(){
     return marketFunds;
 }
 
-function getBond(index){
+export function getBond(){
     return bonds;
 }
 
-function changeStock(name, sentiment, maxAmount) {
-    for (let i = 0; i < stockData.length; i++) {
-        if (stockData[i].name === name) {
-            if (sentiment === 'positive') {
-                //random amount increase between $1 and maxAmount * Current Price
-                const randomAmount = Math.floor(Math.random() * (stockData[i].cost * maxAmount)) + 1;
-                stockData[i].cost += randomAmount;
-                return;
-            }else if(sentiment === 'negative'){
-                //random amount decrease between $1 and maxAmount * Current Price
-                const randomAmount = Math.floor(Math.random() * (stockData[i].cost * maxAmount)) + 1;
-                stockData[i].cost -= randomAmount;
-                return;
-            }
-            fluctuate = Math.random < 0.5;
-            //randomly fluctuates between 5% 
-            const randomAmount = Math.floor(Math.random() * (stockData[i].cost * 0.05));
-            if(fluctuate){
-                //fluctuated increase
-                stockData[i].cost += randomAmount;
-                return;
-            }
-            //fluctuates decrease
-            stockData[i].cost -= randomAmount;
-            return;
-        }   
-    }
+export function changeStock(name, sentiment, maxAmount) {
+  for (let i = 0; i < stockData.length; i++) {
+    if (stockData[i].name === name) {
+      if (sentiment === 'positive') {
+        //random amount increase between $1 and maxAmount * Current Price
+        const randomAmount = Math.floor(Math.random() * (stockData[i].cost * maxAmount)) + 1;
+        stockData[i].cost += randomAmount;
+        return;
+      }else if(sentiment === 'negative'){
+        //random amount decrease between $1 and maxAmount * Current Price
+        const randomAmount = Math.floor(Math.random() * (stockData[i].cost * maxAmount)) + 1;
+        stockData[i].cost -= randomAmount;
+        return;
+      }
+      let fluctuate = Math.random < 0.5;
+      //randomly fluctuates between 15% 
+      const randomAmount = Math.floor(Math.random() * (stockData[i].cost * 0.15));
+      if(fluctuate){
+        //fluctuated increase
+        stockData[i].cost += randomAmount;
+        return;
+      }
+      //fluctuates decrease
+      stockData[i].cost -= randomAmount;
+      return;
+    }   
+  }
 }
 
-function changeIndustry(industry, sentiment, maxAmount, affectsBondPrice) {
-    for (let i = 0; i < marketFunds.length; i++) {
-        if (marketFunds[i].industry === industry) {
-            if (sentiment === 'positive') {
-                //random amount increase between $1 and maxAmount * Current Price
-                const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
-                marketFunds[i].cost += randomAmount;
-                return;
-            }else if(sentiment === 'negative'){
-                //random amount decrease between $1 and maxAmount * Current Price
-                const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
-                marketFunds[i].cost -= randomAmount;
-                return;
-            }
-            fluctuate = Math.random < 0.5;
-            //randomly fluctuates between 5% 
-            const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * 0.05));
-            if(fluctuate){
-                //fluctuated increase
-                marketFunds[i].cost += randomAmount;
-                return;
-            }
-            //fluctuates decrease
-            marketFunds[i].cost -= randomAmount;
-            return;
+export function changeIndustry(industry, sentiment, maxAmount, affectsBondPrice) {
+  for (let i = 0; i < marketFunds.length; i++) {
+    if (marketFunds[i].industry === industry) {
+      if (sentiment === 'positive') {
+        //random amount increase between $1 and maxAmount * Current Price
+        const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
+        marketFunds[i].cost += randomAmount;
+        break;
+      }else if(sentiment === 'negative'){
+        //random amount decrease between $1 and maxAmount * Current Price
+        const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
+        marketFunds[i].cost -= randomAmount;
+        break;
+      }else{
+        let fluctuate = Math.random < 0.5;
+        //randomly fluctuates between 15% 
+        const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * 0.15));
+        if(fluctuate){
+          //fluctuated increase
+          marketFunds[i].cost += randomAmount;
+          break;
         }
-        if( i < bonds.length && bonds[i] === industry){
-            // Assume a simple linear relationship in bond yields
-            const yieldChange = percentageChange * 0.2; 
-        
-            // Adjust bond yields based on the affectsBondPrice property
-            if (sentiment === 'positive' && affectsBondPrice === 'positive') {
-                bonds[i].yield -= yieldChange;
-            } else if (sentiment === 'negative' && affectsBondPrice === 'negative') {
-                bonds[i].yield += yieldChange;
-            }
-            annualCouponPayment = bonds[i].yield * bonds[i].cost;
-            recalculateBondPrice(bonds[i].yield, annualCouponPayment, bonds[i].cost, 5);
-        }
+        //fluctuates decrease
+        marketFunds[i].cost -= randomAmount;
+        break;
+      }
     }
+  }
+  // for(let i = 0; i < bonds.length; i++){
+  //   if(bonds[i].industry === industry){
+  //     // Assume a simple linear relationship in bond yields
+  //     const yieldChange = percentageChange * 0.2; 
+  
+  //     // Adjust bond yields based on the affectsBondPrice property
+  //   if (sentiment === 'positive' && affectsBondPrice === 'positive') {
+  //     bonds[i].yield -= yieldChange;
+  //   } else if (sentiment === 'negative' && affectsBondPrice === 'negative') {
+  //     bonds[i].yield += yieldChange;
+  //   }
+  //     annualCouponPayment = bonds[i].yield * bonds[i].cost;
+  //     recalculateBondPrice(bonds[i].yield, annualCouponPayment, bonds[i].cost, 5);
+  //     return;
+  //   } 
+  // }  
 }
 
-function calculateNewBondPrice(newYield, annualCouponPayment, faceValue, numberOfYears) {
-    const presentValueFactor = 1 / Math.pow(1 + newYield, numberOfYears);
-    const newPresentValue = annualCouponPayment * ((1 - presentValueFactor) / newYield) + faceValue * presentValueFactor;
-    return newPresentValue;
-}
+// function recalculateBondPrice(newYield, annualCouponPayment, faceValue, numberOfYears) {
+//   const presentValueFactor = 1 / Math.pow(1 + newYield, numberOfYears);
+//   const newPresentValue = annualCouponPayment * ((1 - presentValueFactor) / newYield) + faceValue * presentValueFactor;
+//   return newPresentValue;
+// }
