@@ -1,6 +1,15 @@
 body{
     font-family: 'Times New Roman', Times, serif;
     background-color: black;
+    color: white;
+}
+
+.headers{
+    margin-top: 4%;
+}
+
+#Change{
+    margin-bottom: 2%;
 }
 
 .box{
@@ -9,4 +18,17 @@ body{
 
 #stockName{
     margin-top: 3%;
+}
+
+.line{
+    height: 0.01%;
+    background-color: white;
+    width: 83.33%;
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-bottom: 1%;
+}
+
+.spaceOut{
+    margin-bottom: 2%;
 }
