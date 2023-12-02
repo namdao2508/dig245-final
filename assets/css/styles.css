@@ -1,5 +1,6 @@
 body{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Avenir', sans-serif;
+    font-weight: 300;
     background-color: black;
     color: white;
 }
@@ -24,11 +25,14 @@ body{
     height: 0.01%;
     background-color: white;
     width: 83.33%;
-    margin-left: 8%;
-    margin-right: 8%;
+    margin-left: 0 auto;
     margin-bottom: 1%;
 }
 
 .spaceOut{
-    margin-bottom: 2%;
+    margin-bottom: 1.5%;
+}
+
+button{
+    width: 100%;
 }

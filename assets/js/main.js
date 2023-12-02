@@ -54,61 +54,60 @@ const stockData = [
     owned: 0
   }
 ];  
-
 const marketFunds = [
   {
     name: "Tech Innovators Fund",
     industry: "Technology",
     description: "Invest in leading technology companies driving innovation and growth.",
-    riskLevel: "Moderate-High",
     cost: 1000,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "TIF" // Add a symbol property with a suitable value
   },
   {
     name: "Healthcare Growth Fund",
     industry: "Healthcare",
     description: "Support healthcare breakthroughs and advancements with this fund.",
-    riskLevel: "Moderate",
     cost: 545,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "HGF" // Add a symbol property with a suitable value
   },
   {
     name: "Global Real Estate Opportunities Fund",
     industry: "Real Estate",
     description: "Diversify your portfolio with global real estate investments.",
-    riskLevel: "Moderate",
     cost: 267,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "GRO" // Add a symbol property with a suitable value
   },
   {
     name: "Sustainable Future Fund",
     industry: "ESG",
     description: "Invest in companies committed to Environmental, Social, and Governance principles.",
-    riskLevel: "Low-Moderate",
     cost: 35,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "SFF" // Add a symbol property with a suitable value
   },
   {
     name: "Energy Leaders Fund",
     industry: "Energy/Oil",
     description: "Participate in the growth of leading energy and oil companies.",
-    riskLevel: "High",
     cost: 98,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "ELF" // Add a symbol property with a suitable value
   },
   {
     name: "Financial Services Fund",
     industry: "Financial Services",
     description: "Strengthen your portfolio with stable and reliable financial industry investments.",
-    riskLevel: "Moderate",
     cost: 132,
     data: [],
-    owned: 0
+    owned: 0,
+    symbol: "FSF" // Add a symbol property with a suitable value
   },
 ];
 
@@ -197,17 +196,19 @@ for (let i = 0; i < stockData.length; i++) {
       const randomAmount = Math.floor(Math.random() * (stockData[i].cost * maxAmount)) + 1;
       stockData[i].cost -= randomAmount;
       return;
-    }
-    let fluctuate = Math.random < 0.5;
-    //randomly fluctuates between 15% 
-    const randomAmount = Math.floor(Math.random() * (stockData[i].cost * 0.15));
-    if(fluctuate){
-      //fluctuated increase
-      stockData[i].cost += randomAmount;
-      return;
-    }
-    //fluctuates decrease
-    stockData[i].cost -= randomAmount;
+    }else{
+      let fluctuate = Math.random();
+      //randomly fluctuates between 15% 
+      const randomAmount = Math.floor(Math.random() * (stockData[i].cost * 0.15));
+      
+      if(fluctuate < 0.5){
+        //fluctuated increase
+        stockData[i].cost += randomAmount;
+        return;
+      }
+      //fluctuates decrease
+      stockData[i].cost -= randomAmount;
+      }
     return;
   }   
 }
@@ -220,24 +221,24 @@ for (let i = 0; i < marketFunds.length; i++) {
       //random amount increase between $1 and maxAmount * Current Price
       const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
       marketFunds[i].cost += randomAmount;
-      break;
+      return;
     }else if(sentiment === 'negative'){
       //random amount decrease between $1 and maxAmount * Current Price
       const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * maxAmount)) + 1;
       marketFunds[i].cost -= randomAmount;
-      break;
+      return;
     }else{
-      let fluctuate = Math.random < 0.5;
+      let fluctuate = Math.random();
       //randomly fluctuates between 15% 
       const randomAmount = Math.floor(Math.random() * (marketFunds[i].cost * 0.15));
-      if(fluctuate){
+      if(fluctuate < 0.7){
         //fluctuated increase
         marketFunds[i].cost += randomAmount;
-        break;
+        return;
       }
       //fluctuates decrease
       marketFunds[i].cost -= randomAmount;
-      break;
+      return;
     }
   }
 }
@@ -467,14 +468,25 @@ function fundsOperations(marketFundName, numStocks, buy){
     }
 }
 
+function toggleVisibility(element) {
+  if (element.classList.contains("d-none")) {
+    element.classList.remove("d-none");
+    element.classList.add("d-block");
+  } else {
+    element.classList.remove("d-block");
+    element.classList.add("d-none");
+  }
+}
+
 const performance = document.getElementById("Portfolio");
 const change = document.getElementById("Change");
 
-stocksOperations('BioPharm Corp.', 100, true);
-stocksOperations('DeltaEnergy Ltd.', 50, true);
-fundsOperations('Technology', 40, true);
-fundsOperations('Healthcare', 20, true);
-fundsOperations('Real Estate', 30, true);
+stocksOperations("BioPharm Corp.",1, true);
+stocksOperations("DeltaEnergy Ltd.", 1, true);
+stocksOperations("CloudCom Systems",1, true);
+stocksOperations("EcoFoods Group", 1, true);
+stocksOperations("Fusion Motors Inc.",1, true);
+stocksOperations("GreenTech Solutions", 1, true);
 run();
 
 var color;
@@ -508,7 +520,7 @@ let mainChart = new Chart("mainChart", {
   data: {
       labels: xValues,
       datasets: [{
-        label: 'Portfolio Performance',
+        label: "Portfolio Performance",
         fill: false,
         lineTension: 0,
         backgroundColor: color,
@@ -642,6 +654,8 @@ for(let i = 0; i < 5; i++){
   }
 }
 
+const modal = document.getElementById("myModal");
+
 // STOCK 1
 if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
   color = "rgb(255, 80, 0)";
@@ -651,11 +665,27 @@ if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
 const stock1Symbol = document.getElementById("stock1Symbol");
 const stock1Owned = document.getElementById("stock1Owned");
 const stock1Price = document.getElementById("stock1Price");
-stock1Symbol.textContent = stockData[0].symbol;
+var trade1 = document.getElementById("trade1");
+var buy1 = document.getElementById("buy1");
+var sell1 = document.getElementById("sell1");
+stock1Symbol.textContent = stockData[0].name + " (" + stockData[0].symbol + ")";
 stock1Owned.textContent = stockData[0].owned + " shares";
 stock1Price.textContent = "$" + stockData[0].cost;
-stock1Price.style.backgroundColor = color;
-stock1Price.style.color = "rgb(255,255,255)";
+trade1.style.backgroundColor = color;
+buy1.style.backgroundColor = color;
+sell1.style.backgroundColor = color;
+
+trade1.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy1);
+  toggleVisibility(sell1);
+});
+
+buy1.addEventListener("click", function() {
+  toggleVisibility(modal);
+});
+
+
 let stock1 = new Chart("stock1", {
   type: "line",
   data: {
@@ -701,7 +731,6 @@ let stock1 = new Chart("stock1", {
   }
 });
 
-
 //STOCK 2
 if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
   color = "rgb(255, 80, 0)";
@@ -711,11 +740,21 @@ if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
 const stock2Symbol = document.getElementById("stock2Symbol");
 const stock2Owned = document.getElementById("stock2Owned");
 const stock2Price = document.getElementById("stock2Price");
-stock2Symbol.textContent = stockData[1].symbol;
+var trade2 = document.getElementById("trade2");
+var buy2 = document.getElementById("buy2");
+var sell2 = document.getElementById("sell2");
+stock2Symbol.textContent = stockData[1].name + " (" + stockData[1].symbol + ")";
 stock2Owned.textContent = stockData[1].owned + " shares";
 stock2Price.textContent = "$" + stockData[1].cost;
-stock2Price.style.backgroundColor = color;
-stock2Price.style.color = "rgb(255,255,255)";
+trade2.style.backgroundColor = color;
+buy2.style.backgroundColor = color;
+sell2.style.backgroundColor = color;
+
+trade2.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy2);
+  toggleVisibility(sell2);
+});
 let stock2 = new Chart("stock2", {
   type: "line",
   data: {
@@ -770,11 +809,21 @@ if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
 const stock3Symbol = document.getElementById("stock3Symbol");
 const stock3Owned = document.getElementById("stock3Owned");
 const stock3Price = document.getElementById("stock3Price");
-stock3Symbol.textContent = stockData[2].symbol;
+var trade3 = document.getElementById("trade3");
+var buy3 = document.getElementById("buy3");
+var sell3 = document.getElementById("sell3");
+stock3Symbol.textContent = stockData[2].name + " (" + stockData[2].symbol + ")";
 stock3Owned.textContent = stockData[2].owned + " shares";
 stock3Price.textContent = "$" + stockData[2].cost;
-stock3Price.style.backgroundColor = color;
-stock3Price.style.color = "rgb(255,255,255)";
+trade3.style.backgroundColor = color;
+buy3.style.backgroundColor = color;
+sell3.style.backgroundColor = color;
+
+trade3.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy3);
+  toggleVisibility(sell3);
+});
 let stock3 = new Chart("stock3", {
   type: "line",
   data: {
@@ -829,11 +878,21 @@ if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
 const stock4Symbol = document.getElementById("stock4Symbol");
 const stock4Owned = document.getElementById("stock4Owned");
 const stock4Price = document.getElementById("stock4Price");
-stock4Symbol.textContent = stockData[3].symbol;
+var trade4 = document.getElementById("trade4");
+var buy4 = document.getElementById("buy4");
+var sell4 = document.getElementById("sell4");
+stock4Symbol.textContent = stockData[3].name + " (" + stockData[3].symbol + ")";
 stock4Owned.textContent = stockData[3].owned + " shares";
 stock4Price.textContent = "$" + stockData[3].cost;
-stock4Price.style.backgroundColor = color;
-stock4Price.style.color = "rgb(255,255,255)";
+trade4.style.backgroundColor = color;
+buy4.style.backgroundColor = color;
+sell4.style.backgroundColor = color;
+
+trade4.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy4);
+  toggleVisibility(sell4);
+});
 let stock4 = new Chart("stock4", {
   type: "line",
   data: {
@@ -888,11 +947,21 @@ if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
 const stock5Symbol = document.getElementById("stock5Symbol");
 const stock5Owned = document.getElementById("stock5Owned");
 const stock5Price = document.getElementById("stock5Price");
-stock5Symbol.textContent = stockData[4].symbol;
+var trade5 = document.getElementById("trade5");
+var buy5 = document.getElementById("buy5");
+var sell5 = document.getElementById("sell5");
+stock5Symbol.textContent = stockData[4].name + " (" + stockData[4].symbol + ")";
 stock5Owned.textContent = stockData[4].owned + " shares";
 stock5Price.textContent = "$" + stockData[4].cost;
-stock5Price.style.backgroundColor = color;
-stock5Price.style.color = "rgb(255,255,255)";
+trade5.style.backgroundColor = color;
+buy5.style.backgroundColor = color;
+sell5.style.backgroundColor = color;
+
+trade5.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy5);
+  toggleVisibility(sell5);
+});
 let stock5 = new Chart("stock5", {
   type: "line",
   data: {
@@ -947,11 +1016,21 @@ if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
 const stock6Symbol = document.getElementById("stock6Symbol");
 const stock6Owned = document.getElementById("stock6Owned");
 const stock6Price = document.getElementById("stock6Price");
-stock6Symbol.textContent = stockData[5].symbol;
+var trade6 = document.getElementById("trade6");
+var buy6 = document.getElementById("buy6");
+var sell6 = document.getElementById("sell6");
+stock6Symbol.textContent = stockData[5].name + " (" + stockData[5].symbol + ")";
 stock6Owned.textContent = stockData[5].owned + " shares";
 stock6Price.textContent = "$" + stockData[5].cost;
-stock6Price.style.backgroundColor = color;
-stock6Price.style.color = "rgb(255,255,255)";
+trade6.style.backgroundColor = color;
+buy6.style.backgroundColor = color;
+sell6.style.backgroundColor = color;
+
+trade6.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buy6);
+  toggleVisibility(sell6);
+});
 let stock6 = new Chart("stock6", {
   type: "line",
   data: {
@@ -991,6 +1070,360 @@ let stock6 = new Chart("stock6", {
         ticks: {
           min: Math.min.apply(null, stockData[5].data), 
           max: Math.max.apply(null, stockData[5].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 1
+if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund1Symbol = document.getElementById("fund1Symbol");
+const fund1Owned = document.getElementById("fund1Owned");
+const fund1Price = document.getElementById("fund1Price");
+const fTrade1 = document.getElementById("fTrade1");
+fund1Symbol.textContent = marketFunds[0].name + " (" + marketFunds[0].symbol + ")";
+fund1Owned.textContent = marketFunds[0].owned + " shares";
+fund1Price.textContent = "$" + marketFunds[0].cost;
+fTrade1.style.backgroundColor = color;
+let fund1 = new Chart("fund1", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[0].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[0].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[0].data), 
+          max: Math.max.apply(null, marketFunds[0].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 2
+if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund2Symbol = document.getElementById("fund2Symbol");
+const fund2Owned = document.getElementById("fund2Owned");
+const fund2Price = document.getElementById("fund2Price");
+const fTrade2 = document.getElementById("fTrade2");
+fund2Symbol.textContent = marketFunds[1].name + " (" + marketFunds[1].symbol + ")";
+fund2Owned.textContent = marketFunds[1].owned + " shares";
+fund2Price.textContent = "$" + marketFunds[1].cost;
+fTrade2.style.backgroundColor = color;
+let fund2 = new Chart("fund2", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[1].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[1].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[1].data), 
+          max: Math.max.apply(null, marketFunds[1].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 3
+if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund3Symbol = document.getElementById("fund3Symbol");
+const fund3Owned = document.getElementById("fund3Owned");
+const fund3Price = document.getElementById("fund3Price");
+const fTrade3 = document.getElementById("fTrade3");
+fund3Symbol.textContent = marketFunds[2].name + " (" + marketFunds[2].symbol + ")";
+fund3Owned.textContent = marketFunds[2].owned + " shares";
+fund3Price.textContent = "$" + marketFunds[2].cost;
+fTrade3.style.backgroundColor = color;
+let fund3 = new Chart("fund3", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[2].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[2].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[2].data), 
+          max: Math.max.apply(null, marketFunds[2].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 4
+if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund4Symbol = document.getElementById("fund4Symbol");
+const fund4Owned = document.getElementById("fund4Owned");
+const fund4Price = document.getElementById("fund4Price");
+const fTrade4 = document.getElementById("fTrade4");
+fund4Symbol.textContent = marketFunds[3].name + " (" + marketFunds[3].symbol + ")";
+fund4Owned.textContent = marketFunds[3].owned + " shares";
+fund4Price.textContent = "$" + marketFunds[3].cost;
+fTrade4.style.backgroundColor = color;
+let fund4 = new Chart("fund4", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[3].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[3].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[3].data), 
+          max: Math.max.apply(null, marketFunds[3].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 5
+if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund5Symbol = document.getElementById("fund5Symbol");
+const fund5Owned = document.getElementById("fund5Owned");
+const fund5Price = document.getElementById("fund5Price");
+const fTrade5 = document.getElementById("fTrade5");
+fund5Symbol.textContent = marketFunds[4].name + " (" + marketFunds[4].symbol + ")";
+fund5Owned.textContent = marketFunds[4].owned + " shares";
+fund5Price.textContent = "$" + marketFunds[4].cost;
+fTrade5.style.backgroundColor = color;
+let fund5 = new Chart("fund5", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[4].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[4].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[4].data), 
+          max: Math.max.apply(null, marketFunds[4].data)
+        }
+      }
+    }
+  }
+});
+
+// Market Fund 6
+if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+const fund6Symbol = document.getElementById("fund6Symbol");
+const fund6Owned = document.getElementById("fund6Owned");
+const fund6Price = document.getElementById("fund6Price");
+const fTrade6 = document.getElementById("fTrade6");
+fund6Symbol.textContent = marketFunds[5].name + " (" + marketFunds[5].symbol + ")";
+fund6Owned.textContent = marketFunds[5].owned + " shares";
+fund6Price.textContent = "$" + marketFunds[5].cost;
+fTrade6.style.backgroundColor = color;
+let fund6 = new Chart("fund6", {
+  type: "line",
+  data: {
+      labels: xValues,
+      datasets: [{
+        label: marketFunds[5].name,
+        fill: false,
+        lineTension: 0,
+        backgroundColor: color,
+        borderColor: color,
+        data: marketFunds[5].data
+      }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black", 
+        },
+        grid: {
+          color: "black", 
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[5].data), 
+          max: Math.max.apply(null, marketFunds[5].data)
         }
       }
     }
