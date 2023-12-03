@@ -158,27 +158,78 @@ const stockNews = [
   { company: 'Fusion Motors Inc.', news: 'Experiences a surge in demand for electric vehicles as governments announce green energy incentives.', sentiment: 'neutral' },
   { company: 'GreenTech Solutions', news: 'Announces plans to go public, attracting attention from investors worldwide.', sentiment: 'neutral' },
   { company: 'EcoFoods Group', news: 'Recalls a popular product due to contamination concerns, impacting quarterly earnings.', sentiment: 'negative' },
+  { company: 'BioPharm Corp.', news: 'Secures a partnership with a leading research institution to advance personalized medicine.', sentiment: 'positive' },
+  { company: 'CloudCom Systems', news: 'Launches a new data encryption solution, enhancing data privacy for clients.', sentiment: 'positive' },
+  { company: 'DeltaEnergy Ltd.', news: 'Commits to net-zero emissions by 2030, aligning with global sustainability goals.', sentiment: 'positive' },
+  { company: 'EcoFoods Group', news: 'Introduces a transparency initiative, providing detailed sourcing information to consumers.', sentiment: 'positive' },
+  { company: 'Fusion Motors Inc.', news: 'Releases an upgraded version of its electric vehicle, setting new standards for performance.', sentiment: 'positive' },
+  { company: 'GreenTech Solutions', news: 'Launches a community outreach program to promote environmental education.', sentiment: 'positive' },
+  { company: 'CloudCom Systems', news: 'Appoints a seasoned cybersecurity expert as the new Chief Information Security Officer.', sentiment: 'positive' },
+  { company: 'EcoFoods Group', news: 'Expands its sustainable packaging initiative, reducing plastic usage across product lines.', sentiment: 'positive' },
+  { company: 'Fusion Motors Inc.', news: 'Addresses recall challenges with improved quality control measures, reassuring consumers.', sentiment: 'neutral' },
+  { company: 'GreenTech Solutions', news: 'Collaborates with start-ups for innovative solutions in renewable energy storage.', sentiment: 'positive' },
+  { company: 'BioPharm Corp.', news: 'Receives FDA approval for a breakthrough treatment, opening new revenue streams.', sentiment: 'positive' },
+  { company: 'GreenTech Solutions', news: 'Launches a biodiversity conservation project in partnership with environmental NGOs.', sentiment: 'positive' },
+  { company: 'Fusion Motors Inc.', news: 'Expands its charging infrastructure to support the growing electric vehicle market.', sentiment: 'positive' },
+  { company: 'DeltaEnergy Ltd.', news: 'Invests in cutting-edge green technologies, positioning itself as an industry leader.', sentiment: 'positive' },
+  { company: 'EcoFoods Group', news: 'Enters the plant-based meat market with a range of innovative and sustainable products.', sentiment: 'positive' },
+  { company: 'CloudCom Systems', news: 'Announces a breakthrough in quantum computing, sparking interest from tech enthusiasts.', sentiment: 'positive' },
+  { company: 'Fusion Motors Inc.', news: 'Addresses legal challenges with a settlement, mitigating potential long-term impacts.', sentiment: 'neutral' },
+  { company: 'GreenTech Solutions', news: 'Collaborates with universities to establish a research fund for sustainable technologies.', sentiment: 'positive' },
+  { company: 'EcoFoods Group', news: 'Expands its organic farming network, ensuring a steady supply of natural ingredients.', sentiment: 'positive' },
+  { company: 'BioPharm Corp.', news: 'Partners with global health organizations for affordable access to life-saving medications.', sentiment: 'positive' },
+  { company: 'CloudCom Systems', news: 'Addresses privacy concerns with a comprehensive data protection policy, rebuilding trust.', sentiment: 'positive' },
+  { company: 'DeltaEnergy Ltd.', news: 'Unveils plans for a green bond issuance to fund renewable energy projects globally.', sentiment: 'positive' },
+  { company: 'Fusion Motors Inc.', news: 'Explores partnerships with ride-sharing companies to expand its electric vehicle market.', sentiment: 'positive' },
+  { company: 'GreenTech Solutions', news: 'Initiates a tree-planting campaign to offset carbon emissions, fostering environmental stewardship.', sentiment: 'positive' },
+  { company: 'EcoFoods Group', news: 'Launches an innovation hub to support sustainable food startups, driving industry progress.', sentiment: 'positive' },
+  { company: 'CloudCom Systems', news: 'Experiences a data breach, leading to a decline in stock prices and heightened cybersecurity measures.', sentiment: 'negative' },
+  { company: 'Fusion Motors Inc.', news: 'Recalls a popular vehicle model due to safety concerns, impacting consumer confidence.', sentiment: 'negative' },
+  { company: 'EcoFoods Group', news: 'Faces backlash over a supply chain scandal, prompting a review of sourcing practices.', sentiment: 'negative' },
 ];
 
 const usedStockStories = Array.from({ length: stockNews.length }, () => false);
 
 const industryNewsWithBondEffect = [
   { industry: "Technology", news: "Cybersecurity legislation enhances data protection, boosting tech sector confidence.", sentiment: "positive", affectsBondPrice: "neutral" },
-  { industry: "Healthcare", news: "New monetary policies allocate funds for telemedicine infrastructure, supporting healthcare innovation.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "Real Estate", news: "Fiscal policies incentivize green building projects, driving sustainable real estate development.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "ESG", news: "Increased government spending in ESG initiatives attracts socially responsible investors.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Healthcare", news: "New monetary policies allocate funds for telemedicine infrastructure, supporting healthcare innovation.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Fiscal policies incentivize green building projects, driving sustainable real estate development.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "ESG", news: "Increased government spending in ESG initiatives attracts socially responsible investors.", sentiment: "positive", affectsBondPrice: null },
   { industry: "Energy/Oil", news: "Energy Leaders Fund announces strategic shift towards renewable energy, aligning with industry trends.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "Financial Services", news: "Moderate market fluctuations prompt financial institutions to reassess risk management strategies.", sentiment: "neutral", affectsBondPrice: "neutral" },
+  { industry: "Financial Services", news: "Moderate market fluctuations prompt financial institutions to reassess risk management strategies.", sentiment: "neutral", affectsBondPrice: null },
   { industry: "Technology", news: "Urbanization trends drive demand for smart city technologies, positively impacting the tech sector.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "Healthcare", news: "Regulatory challenges pose obstacles for pharmaceutical companies, impacting industry growth.", sentiment: "negative", affectsBondPrice: "negative" },
-  { industry: "Real Estate", news: "Rising interest rates create uncertainties in the real estate market, affecting property values.", sentiment: "negative", affectsBondPrice: "negative" },
-  { industry: "ESG", news: "Concerns arise as companies face criticism for greenwashing in ESG reporting.", sentiment: "negative", affectsBondPrice: "negative" },
+  { industry: "Healthcare", news: "Regulatory challenges pose obstacles for pharmaceutical companies, impacting industry growth.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Rising interest rates create uncertainties in the real estate market, affecting property values.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "ESG", news: "Concerns arise as companies face criticism for greenwashing in ESG reporting.", sentiment: "negative", affectsBondPrice: null },
   { industry: "Energy/Oil", news: "Oil prices surge following geopolitical tensions, affecting the performance of energy stocks.", sentiment: "negative", affectsBondPrice: "negative" },
-  { industry: "Financial Services", news: "Positive sentiment as financial institutions adopt fintech innovations to enhance customer experience.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Financial Services", news: "Positive sentiment as financial institutions adopt fintech innovations to enhance customer experience.", sentiment: "positive", affectsBondPrice: null },
   { industry: "Technology", news: "Tech industry faces challenges with supply chain disruptions, impacting product launches.", sentiment: "negative", affectsBondPrice: "negative" },
-  { industry: "Healthcare", news: "Positive outlook as healthcare companies collaborate on a joint initiative for disease prevention.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "Real Estate", news: "Government initiatives drive affordable housing projects, positively impacting the real estate sector.", sentiment: "positive", affectsBondPrice: "positive" },
-  { industry: "ESG", news: "Companies prioritize diversity and inclusion initiatives, aligning with ESG principles.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Healthcare", news: "Positive outlook as healthcare companies collaborate on a joint initiative for disease prevention.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Government initiatives drive affordable housing projects, positively impacting the real estate sector.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "ESG", news: "Companies prioritize diversity and inclusion initiatives, aligning with ESG principles.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Technology", news: "Semiconductor shortage challenges tech companies, impacting production schedules.", sentiment: "negative", affectsBondPrice: "negative" },
+  { industry: "Energy/Oil", news: "Renewable energy subsidies face potential cuts, raising concerns in the energy sector.", sentiment: "negative", affectsBondPrice: "negative" },
+  { industry: "Financial Services", news: "Rising interest rates lead to increased borrowing costs, impacting financial sector profits.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Healthcare", news: "Drug patent expirations create challenges for pharmaceutical companies, affecting revenue streams.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Commercial real estate market faces decline as remote work trends continue.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Technology", news: "New breakthroughs in AI technology drive optimism in the tech sector.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Energy/Oil", news: "Major oil discovery boosts industry confidence, leading to positive market reactions.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Financial Services", news: "Fintech startups receive substantial funding, contributing to positive industry growth.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Healthcare", news: "Medical research institutes collaborate on groundbreaking cancer treatment, positively impacting healthcare stocks.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Residential housing market experiences a surge in demand, driving up property values.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "ESG", news: "Companies adopt aggressive sustainability goals, attracting investors with a focus on ESG principles.", sentiment: "positive", affectsBondPrice: null },
+  { industry: "Technology", news: "Global tech giants announce strategic partnerships, fostering innovation and market growth.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Energy/Oil", news: "Advancements in renewable energy technology lead to increased investments in clean energy projects.", sentiment: "positive", affectsBondPrice: "positive" },
+  { industry: "Financial Services", news: "Central banks implement measures to stabilize financial markets, providing reassurance to investors.", sentiment: "neutral", affectsBondPrice: null },
+  { industry: "Healthcare", news: "Regulatory approval delays impact pharmaceutical companies, leading to uncertainty in the sector.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Commercial property vacancies rise as remote work trends persist, affecting real estate investments.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "ESG", news: "Companies face criticism for inadequate progress in achieving environmental goals, impacting investor confidence.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Technology", news: "Tech industry grapples with a high-profile data breach, causing a decline in market trust.", sentiment: "negative", affectsBondPrice: "negative" },
+  { industry: "Energy/Oil", news: "Geopolitical tensions disrupt global oil supply chains, negatively affecting energy stocks.", sentiment: "negative", affectsBondPrice: "negative" },
+  { industry: "Financial Services", news: "Increasing interest rates lead to concerns about the affordability of loans, impacting financial institutions.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Healthcare", news: "Global health crisis triggers panic selling in healthcare stocks, leading to market volatility.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "Real Estate", news: "Stringent zoning regulations hinder real estate development, impacting property values.", sentiment: "negative", affectsBondPrice: null },
+  { industry: "ESG", news: "Companies accused of greenwashing face legal repercussions, negatively affecting ESG investments.", sentiment: "negative", affectsBondPrice: null },
 ];
 
 const usedIndustryStories = Array.from({ length: industryNewsWithBondEffect.length }, () => false);
@@ -385,7 +436,7 @@ function results(){
   updateEarnings();
 }
 
-function updateEarnings(){
+function updateEarnings(changes){
   let tempTotal = Array.from({ length: 12 }, () => cash);
   let tempStock = Array.from({ length: 12 }, () => 0);
   let tempFunds = Array.from({ length: 12 }, () => 0);
@@ -403,18 +454,16 @@ function updateEarnings(){
       marketFundsOwned +=  marketFunds[i].cost;
     }
   }
-  
-    for(let i = 0; i < 12; i++){
-      tempTotal[i] += tempStock[i] + tempFunds[i];
-    }
-    earnings = earnings.concat(tempTotal);
-    if(tempStock.length > 0){
-      stocksOwned = tempStock[tempStock.length - 1];
-    }
-    if(tempFunds.length > 0){
-      marketFundsOwned = tempFunds[tempFunds.length - 1];   
-    }
-
+  for(let i = 0; i < 12; i++){
+    tempTotal[i] += tempStock[i] + tempFunds[i];
+  }
+  earnings = earnings.concat(tempTotal);
+  if(tempStock.length > 0){
+    stocksOwned = tempStock[tempStock.length - 1];
+  }
+  if(tempFunds.length > 0){
+    marketFundsOwned = tempFunds[tempFunds.length - 1];   
+  }
 }
 
 function generateNoisyArray(first, last, length) {
@@ -666,7 +715,7 @@ function updatePerformances(){
     }else{
         color = "rgb(0, 200, 5)";
     }
-    performance.textContent = "$" + earnings[earnings.length - 1];
+    performance.textContent = "$ " + earnings[earnings.length - 1].toLocaleString();
     if(earnings[earnings.length -1] - earnings[0] >= 0){
       change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
     }else{
@@ -778,7 +827,6 @@ function updatePieCharts(){
   }
   secondPie.data.datasets[0].data = secondPieData;
   secondPie.update();
-  updateEarnings;
   console.log(stocksOwned);
   console.log(marketFundsOwned);
   firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
@@ -790,8 +838,7 @@ function updatePieCharts(){
   stock5Owned.textContent = stockData[4].owned + " shares";
   stock6Owned.textContent = stockData[5].owned + " shares";
 }
-
-  // Add an event listener to the range input to update the span when the value changes
+  
 rangeData.addEventListener('input', function() {
   currentValueSpan.textContent = this.value + " shares";
   what[2] = Number(rangeData.value);
