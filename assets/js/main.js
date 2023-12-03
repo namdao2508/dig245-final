@@ -814,7 +814,6 @@ if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-
 var trade1 = document.getElementById("trade1");
 var buy1 = document.getElementById("buy1");
 var sell1 = document.getElementById("sell1");
@@ -843,7 +842,6 @@ trade1.addEventListener("click", function() {
   toggleVisibility(buy1);
   toggleVisibility(sell1);
 });
-
 let stock1 = new Chart("stock1", {
   type: "line",
   data: {
@@ -1167,7 +1165,6 @@ let stock4 = new Chart("stock4", {
   }
 });
 
-
 //STOCK 5
 if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
   color = "rgb(255, 80, 0)";
@@ -1346,6 +1343,541 @@ let stock6 = new Chart("stock6", {
   }
 });
 
+// Market Fund 1 
+if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef1 = document.getElementById("tradef1");
+var buyf1 = document.getElementById("buyf1");
+var sellf1 = document.getElementById("sellf1");
+fund1Symbol.textContent = marketFunds[0].name + " (" + marketFunds[0].symbol + ")";
+fund1Owned.textContent = marketFunds[0].owned + " shares";
+fund1Price.textContent = "$" + marketFunds[0].cost;
+tradef1.style.backgroundColor = color;
+buyf1.style.backgroundColor = color;
+sellf1.style.backgroundColor = color;
+buyf1.addEventListener('click', function() {
+  what[0] = marketFunds[0].industry;
+  what[3] = true;
+  what[1] = tradef1;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf1.addEventListener('click', function(){
+  what[0] = marketFunds[0].industry;
+  what[3] = false;
+  what[1] = tradef1;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef1.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf1);
+  toggleVisibility(sellf1);
+});
+let fund1 = new Chart("fund1", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[0].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[0].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[0].data),
+          max: Math.max.apply(null, marketFunds[0].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+// Market Fund 2 
+if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef2 = document.getElementById("tradef2");
+var buyf2 = document.getElementById("buyf2");
+var sellf2 = document.getElementById("sellf2");
+fund2Symbol.textContent = marketFunds[1].name + " (" + marketFunds[1].symbol + ")";
+fund2Owned.textContent = marketFunds[1].owned + " shares";
+fund2Price.textContent = "$" + marketFunds[1].cost;
+tradef2.style.backgroundColor = color;
+buyf2.style.backgroundColor = color;
+sellf2.style.backgroundColor = color;
+buyf2.addEventListener('click', function() {
+  what[0] = marketFunds[1].industry;
+  what[3] = true;
+  what[1] = tradef2;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf2.addEventListener('click', function(){
+  what[0] = marketFunds[1].industry;
+  what[3] = false;
+  what[1] = tradef2;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef2.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf2);
+  toggleVisibility(sellf2);
+});
+let fund2 = new Chart("fund2", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[1].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[1].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[1].data),
+          max: Math.max.apply(null, marketFunds[1].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+// Market Fund 3
+if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef3 = document.getElementById("tradef3");
+var buyf3 = document.getElementById("buyf3");
+var sellf3 = document.getElementById("sellf3");
+fund3Symbol.textContent = marketFunds[2].name + " (" + marketFunds[2].symbol + ")";
+fund3Owned.textContent = marketFunds[2].owned + " shares";
+fund3Price.textContent = "$" + marketFunds[2].cost;
+tradef3.style.backgroundColor = color;
+buyf3.style.backgroundColor = color;
+sellf3.style.backgroundColor = color;
+buyf3.addEventListener('click', function() {
+  what[0] = marketFunds[2].industry;
+  what[3] = true;
+  what[1] = tradef3;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf3.addEventListener('click', function(){
+  what[0] = marketFunds[2].industry;
+  what[3] = false;
+  what[1] = tradef3;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef3.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf3);
+  toggleVisibility(sellf3);
+});
+let fund3 = new Chart("fund3", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[2].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[2].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[2].data),
+          max: Math.max.apply(null, marketFunds[2].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+// Market Fund 4
+if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef4 = document.getElementById("tradef4");
+var buyf4 = document.getElementById("buyf4");
+var sellf4 = document.getElementById("sellf4");
+fund4Symbol.textContent = marketFunds[3].name + " (" + marketFunds[3].symbol + ")";
+fund4Owned.textContent = marketFunds[3].owned + " shares";
+fund4Price.textContent = "$" + marketFunds[3].cost;
+tradef4.style.backgroundColor = color;
+buyf4.style.backgroundColor = color;
+sellf4.style.backgroundColor = color;
+buyf4.addEventListener('click', function() {
+  what[0] = marketFunds[3].industry;
+  what[3] = true;
+  what[1] = tradef4;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf4.addEventListener('click', function(){
+  what[0] = marketFunds[3].industry;
+  what[3] = false;
+  what[1] = tradef4;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef4.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf4);
+  toggleVisibility(sellf4);
+});
+let fund4 = new Chart("fund4", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[3].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[3].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[3].data),
+          max: Math.max.apply(null, marketFunds[3].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+// Market Fund 5
+if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef5 = document.getElementById("tradef5");
+var buyf5 = document.getElementById("buyf5");
+var sellf5 = document.getElementById("sellf5");
+fund5Symbol.textContent = marketFunds[4].name + " (" + marketFunds[4].symbol + ")";
+fund5Owned.textContent = marketFunds[4].owned + " shares";
+fund5Price.textContent = "$" + marketFunds[4].cost;
+tradef5.style.backgroundColor = color;
+buyf5.style.backgroundColor = color;
+sellf5.style.backgroundColor = color;
+buyf5.addEventListener('click', function() {
+  what[0] = marketFunds[4].industry;
+  what[3] = true;
+  what[1] = tradef5;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf5.addEventListener('click', function(){
+  what[0] = marketFunds[4].industry;
+  what[3] = false;
+  what[1] = tradef5;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef5.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf5);
+  toggleVisibility(sellf5);
+});
+let fund5 = new Chart("fund5", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[4].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[4].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[4].data),
+          max: Math.max.apply(null, marketFunds[4].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+// Market Fund 6
+if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
+  color = "rgb(255, 80, 0)";
+}else{
+  color = "rgb(0, 200, 5)";
+}
+var tradef6 = document.getElementById("tradef6");
+var buyf6 = document.getElementById("buyf6");
+var sellf6 = document.getElementById("sellf6");
+fund6Symbol.textContent = marketFunds[5].name + " (" + marketFunds[5].symbol + ")";
+fund6Owned.textContent = marketFunds[5].owned + " shares";
+fund6Price.textContent = "$" + marketFunds[5].cost;
+tradef6.style.backgroundColor = color;
+buyf6.style.backgroundColor = color;
+sellf6.style.backgroundColor = color;
+buyf6.addEventListener('click', function() {
+  what[0] = marketFunds[5].industry;
+  what[3] = true;
+  what[1] = tradef6;
+  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sellf6.addEventListener('click', function(){
+  what[0] = marketFunds[5].industry;
+  what[3] = false;
+  what[1] = tradef6;
+  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
+tradef6.addEventListener("click", function() {
+  // Toggle the display property of the Buy and Sell buttons
+  toggleVisibility(buyf6);
+  toggleVisibility(sellf6);
+});
+let fund6 = new Chart("fund6", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: marketFunds[5].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: marketFunds[5].data,
+      pointRadius: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: {
+          color: "black",
+        },
+        grid: {
+          color: "black",
+        },
+      },
+      y: {
+        display: false,
+        ticks: {
+          min: Math.min.apply(null, marketFunds[5].data),
+          max: Math.max.apply(null, marketFunds[5].data),
+        }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
+    }
+  }
+});
+
+
 nextPeriod.addEventListener('click', function() {
   results();
   updatePerformances();
@@ -1363,8 +1895,8 @@ nextPeriod.addEventListener('click', function() {
 run();
 nextPeriod.click();
 
-
 function updatePerformances(){
+  //Main Chart
   if(earnings[earnings.length - 1] < earnings[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1386,6 +1918,7 @@ function updatePerformances(){
   mainChart.scales.y.ticks.max = Math.max.apply(null, earnings);
   mainChart.update();
 
+  //Stock 1
   if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1400,6 +1933,7 @@ function updatePerformances(){
   stock1.update();
   stock1Price.textContent = "$" + stockData[0].cost;
   
+  //Stock 2
   if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1414,6 +1948,7 @@ function updatePerformances(){
   stock2.update();
   stock2Price.textContent = "$" + stockData[1].cost;
 
+  //Stock 3
   if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1428,6 +1963,7 @@ function updatePerformances(){
   stock3.update();
   stock3Price.textContent = "$" + stockData[2].cost;
 
+  //Stock 4
   if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1442,6 +1978,7 @@ function updatePerformances(){
   stock4.update();
   stock4Price.textContent = "$" + stockData[3].cost;
 
+  //Stock 5
   if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1456,6 +1993,7 @@ function updatePerformances(){
   stock5.update();
   stock5Price.textContent = "$" + stockData[4].cost;
   
+  //Stock 6
   if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
     color = "rgb(255, 80, 0)";
   }else{
@@ -1470,366 +2008,98 @@ function updatePerformances(){
   stock6.update();
   stock6Price.textContent = "$" + stockData[5].cost;
 
+  //Fund 1
+  if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund1.data.datasets[0].data = marketFunds[0].data;
+  fund1.data.datasets[0].backgroundColor = color;
+  fund1.data.datasets[0].borderColor = color;
+  fund1.data.labels = xValues;
+  fund1.scales.y.ticks.min = Math.min.apply(null, marketFunds[0]);
+  fund1.scales.y.ticks.max = Math.max.apply(null, marketFunds[0]);
+  fund1.update();
+  fund1Price.textContent = "$" + marketFunds[0].cost;
+
+  //Fund 2
+  if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund2.data.datasets[0].data = marketFunds[1].data;
+  fund2.data.datasets[0].backgroundColor = color;
+  fund2.data.datasets[0].borderColor = color;
+  fund2.data.labels = xValues;
+  fund2.scales.y.ticks.min = Math.min.apply(null, marketFunds[1]);
+  fund2.scales.y.ticks.max = Math.max.apply(null, marketFunds[1]);
+  fund2.update();
+  fund2Price.textContent = "$" + marketFunds[1].cost;
+
+  //Fund 3
+  if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund3.data.datasets[0].data = marketFunds[2].data;
+  fund3.data.datasets[0].backgroundColor = color;
+  fund3.data.datasets[0].borderColor = color;
+  fund3.data.labels = xValues;
+  fund3.scales.y.ticks.min = Math.min.apply(null, marketFunds[2]);
+  fund3.scales.y.ticks.max = Math.max.apply(null, marketFunds[2]);
+  fund3.update();
+  fund3Price.textContent = "$" + marketFunds[2].cost;
+
+  //Fund 4
+  if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund4.data.datasets[0].data = marketFunds[3].data;
+  fund4.data.datasets[0].backgroundColor = color;
+  fund4.data.datasets[0].borderColor = color;
+  fund4.data.labels = xValues;
+  fund4.scales.y.ticks.min = Math.min.apply(null, marketFunds[3]);
+  fund4.scales.y.ticks.max = Math.max.apply(null, marketFunds[3]);
+  fund4.update();
+  fund4Price.textContent = "$" + marketFunds[3].cost;
+
+  //Fund 5
+  if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund5.data.datasets[0].data = marketFunds[4].data;
+  fund5.data.datasets[0].backgroundColor = color;
+  fund5.data.datasets[0].borderColor = color;
+  fund5.data.labels = xValues;
+  fund5.scales.y.ticks.min = Math.min.apply(null, marketFunds[4]);
+  fund5.scales.y.ticks.max = Math.max.apply(null, marketFunds[4]);
+  fund5.update();
+  fund5Price.textContent = "$" + marketFunds[4].cost;
+
+  //Fund 6
+  if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund6.data.datasets[0].data = marketFunds[5].data;
+  fund6.data.datasets[0].backgroundColor = color;
+  fund6.data.datasets[0].borderColor = color;
+  fund6.data.labels = xValues;
+  fund6.scales.y.ticks.min = Math.min.apply(null, marketFunds[5]);
+  fund6.scales.y.ticks.max = Math.max.apply(null, marketFunds[5]);
+  fund6.update();
+  fund6Price.textContent = "$" + marketFunds[5].cost;
+
   console.log(earnings);
-  console.log(stockData[0].data);
+  console.log(marketFunds[0].data);
 
   period++;
-
 }
-
-
-
-
-// Market Fund 1
-if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund1Symbol = document.getElementById("fund1Symbol");
-const fund1Owned = document.getElementById("fund1Owned");
-const fund1Price = document.getElementById("fund1Price");
-const fTrade1 = document.getElementById("fTrade1");
-fund1Symbol.textContent = marketFunds[0].name + " (" + marketFunds[0].symbol + ")";
-fund1Owned.textContent = marketFunds[0].owned + " shares";
-fund1Price.textContent = "$" + marketFunds[0].cost;
-fTrade1.style.backgroundColor = color;
-let fund1 = new Chart("fund1", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[0].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[0].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[0].data), 
-          max: Math.max.apply(null, marketFunds[0].data)
-        }
-      }
-    }
-  }
-});
-
-// Market Fund 2
-if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund2Symbol = document.getElementById("fund2Symbol");
-const fund2Owned = document.getElementById("fund2Owned");
-const fund2Price = document.getElementById("fund2Price");
-const fTrade2 = document.getElementById("fTrade2");
-fund2Symbol.textContent = marketFunds[1].name + " (" + marketFunds[1].symbol + ")";
-fund2Owned.textContent = marketFunds[1].owned + " shares";
-fund2Price.textContent = "$" + marketFunds[1].cost;
-fTrade2.style.backgroundColor = color;
-let fund2 = new Chart("fund2", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[1].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[1].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[1].data), 
-          max: Math.max.apply(null, marketFunds[1].data)
-        }
-      }
-    }
-  }
-});
-
-// Market Fund 3
-if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund3Symbol = document.getElementById("fund3Symbol");
-const fund3Owned = document.getElementById("fund3Owned");
-const fund3Price = document.getElementById("fund3Price");
-const fTrade3 = document.getElementById("fTrade3");
-fund3Symbol.textContent = marketFunds[2].name + " (" + marketFunds[2].symbol + ")";
-fund3Owned.textContent = marketFunds[2].owned + " shares";
-fund3Price.textContent = "$" + marketFunds[2].cost;
-fTrade3.style.backgroundColor = color;
-let fund3 = new Chart("fund3", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[2].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[2].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[2].data), 
-          max: Math.max.apply(null, marketFunds[2].data)
-        }
-      }
-    }
-  }
-});
-
-// Market Fund 4
-if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund4Symbol = document.getElementById("fund4Symbol");
-const fund4Owned = document.getElementById("fund4Owned");
-const fund4Price = document.getElementById("fund4Price");
-const fTrade4 = document.getElementById("fTrade4");
-fund4Symbol.textContent = marketFunds[3].name + " (" + marketFunds[3].symbol + ")";
-fund4Owned.textContent = marketFunds[3].owned + " shares";
-fund4Price.textContent = "$" + marketFunds[3].cost;
-fTrade4.style.backgroundColor = color;
-let fund4 = new Chart("fund4", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[3].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[3].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[3].data), 
-          max: Math.max.apply(null, marketFunds[3].data)
-        }
-      }
-    }
-  }
-});
-
-// Market Fund 5
-if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund5Symbol = document.getElementById("fund5Symbol");
-const fund5Owned = document.getElementById("fund5Owned");
-const fund5Price = document.getElementById("fund5Price");
-const fTrade5 = document.getElementById("fTrade5");
-fund5Symbol.textContent = marketFunds[4].name + " (" + marketFunds[4].symbol + ")";
-fund5Owned.textContent = marketFunds[4].owned + " shares";
-fund5Price.textContent = "$" + marketFunds[4].cost;
-fTrade5.style.backgroundColor = color;
-let fund5 = new Chart("fund5", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[4].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[4].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[4].data), 
-          max: Math.max.apply(null, marketFunds[4].data)
-        }
-      }
-    }
-  }
-});
-
-// Market Fund 6
-if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
-  color = "rgb(255, 80, 0)";
-}else{
-  color = "rgb(0, 200, 5)";
-}
-const fund6Symbol = document.getElementById("fund6Symbol");
-const fund6Owned = document.getElementById("fund6Owned");
-const fund6Price = document.getElementById("fund6Price");
-const fTrade6 = document.getElementById("fTrade6");
-fund6Symbol.textContent = marketFunds[5].name + " (" + marketFunds[5].symbol + ")";
-fund6Owned.textContent = marketFunds[5].owned + " shares";
-fund6Price.textContent = "$" + marketFunds[5].cost;
-fTrade6.style.backgroundColor = color;
-let fund6 = new Chart("fund6", {
-  type: "line",
-  data: {
-      labels: xValues,
-      datasets: [{
-        label: marketFunds[5].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: marketFunds[5].data
-      }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      }
-    },
-    scales: {
-      x: {
-        display: false,
-        ticks: {
-          color: "black", 
-        },
-        grid: {
-          color: "black", 
-        },
-      },
-      y: {
-        display: false,
-        ticks: {
-          min: Math.min.apply(null, marketFunds[5].data), 
-          max: Math.max.apply(null, marketFunds[5].data)
-        }
-      }
-    }
-  }
-});
