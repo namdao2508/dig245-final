@@ -1,3 +1,5 @@
+let period = 0;
+
 const stockData = [
   { 
     name: 'BioPharm Corp.',
@@ -116,7 +118,6 @@ const bonds = [
     name: "Tech Innovators Corp",
     industry: "Technology",
     cost: 1000,
-    yield: 3.8,
     rating: "AAA",
     data: [],
     owned: 0
@@ -125,7 +126,6 @@ const bonds = [
     name: "EcoSolutions Green Bond",
     industry: "Energy/Oil",
     cost: 1500,
-    yield: 4.2,
     rating: "AA",
     data: [],
     owned: 0
@@ -329,52 +329,6 @@ function run(){
             }
         }
     }
-
-    //Add Story to the HTML Elements
-
-    let a = 0;
-    // This for loop will change the price of the stock, mutual funds, or bonds affected by the news
-    for(let i = 0; i < listofNews.length; i++){
-        if(i < 2){
-            let c = findStockByName(listofNews[i].company);
-            let temp = c.cost;
-            changeStock(listofNews[i].company, listofNews[i].sentiment, 0.3);
-            const stockPrices = generateNoisyArray(temp, c.cost, 12);
-            c.data.pop;
-            c.data = c.data.concat(stockPrices);
-            a = c.data.length;
-        }else{
-            let c = findMarketFundsByIndustry(listofNews[i].industry);
-            let temp = c.cost;
-            changeIndustry(listofNews[i].industry, listofNews[i].sentiment, 0.2, listofNews[i].affectsBondPrice);
-            const marketFundPrices = generateNoisyArray(temp, c.cost, 12);
-            c.data.pop;
-            c.data = c.data.concat(marketFundPrices);
-        }
-    }
-
-    // Fluctuate all the other stocks and market funds not affected by the news
-    for(let i = 0; i < stockData.length; i++){
-        if(stockData[i].data.length < a){
-            let temp = stockData[i].cost;
-            changeStock(stockData[i].name, "neutral", 0);
-            const stockPrices = generateNoisyArray(temp, stockData[i].cost, 12);
-            stockData[i].data.pop;
-            stockData[i].data = stockData[i].data.concat(stockPrices);
-        }
-        if(marketFunds[i].data.length < a){
-            let temp = marketFunds[i].cost;
-            changeIndustry(marketFunds[i].industry, "neutral", 0, "neutral");
-            const marketFundPrices = generateNoisyArray(temp, marketFunds[i].cost, 12);
-            marketFunds[i].data.pop;
-            marketFunds[i].data = marketFunds[i].data.concat(marketFundPrices);
-        }
-    }
-
-    // Update Changes to Total Earnings and Total Stocks performance along with 
-    // Funds performance
-    updateEarnings();
-
     // localStorage.setItem("earnings", JSON.stringify(earnings));
     // localStorage.setItem("cash", JSON.stringify(cash));
     // localStorage.setItem("earnings", JSON.stringify(earnings));
@@ -386,34 +340,81 @@ function run(){
     // localStorage.setItem("industryNewsWithBondEffect", JSON.stringify(industryNewsWithBondEffect));
 }
 
-function updateEarnings(){
-    let tempTotal = Array.from({ length: 12 }, () => cash);
-    let tempStock = Array.from({ length: 12 }, () => 0);
-    let tempFunds = Array.from({ length: 12 }, () => 0);
-    for(let i = 0; i < stockData.length; i++){
-        if(stockData[i].owned > 0){
-            for(let j = stockData[i].data.length - 1; j > stockData[i].data.length - 13; j--){
-                let a = stockData[i].data;
-                tempStock[(j)%12] += (stockData[i].data[j] * stockData[i].owned);
-            }
-        }
-        if(marketFunds[i].owned > 0){
-            for(let j = marketFunds[i].data.length - 1; j > marketFunds[i].data.length - 13; j--){
-                tempFunds[(j)%12] += (marketFunds[i].data[j] * marketFunds[i].owned);
-            }
-        }
+function results(){
+  let a = 0;
+    // This for loop will change the price of the stock, mutual funds, or bonds affected by the news
+  for(let i = 0; i < listofNews.length; i++){
+    if(i < 2){
+      let c = findStockByName(listofNews[i].company);
+      let temp = c.cost;
+      changeStock(listofNews[i].company, listofNews[i].sentiment, 0.3);
+      const stockPrices = generateNoisyArray(temp, c.cost, 12);
+      c.data.pop;
+      c.data = c.data.concat(stockPrices);
+      a = c.data.length;
+    }else{
+      let c = findMarketFundsByIndustry(listofNews[i].industry);
+      let temp = c.cost;
+      changeIndustry(listofNews[i].industry, listofNews[i].sentiment, 0.2, listofNews[i].affectsBondPrice);
+      const marketFundPrices = generateNoisyArray(temp, c.cost, 12);
+      c.data.pop;
+      c.data = c.data.concat(marketFundPrices);
     }
-    
+  }
+
+    // Fluctuate all the other stocks and market funds not affected by the news
+  for(let i = 0; i < stockData.length; i++){
+    if(stockData[i].data.length < a){
+      let temp = stockData[i].cost;
+      changeStock(stockData[i].name, "neutral", 0);
+      const stockPrices = generateNoisyArray(temp, stockData[i].cost, 12);
+      stockData[i].data.pop;
+      stockData[i].data = stockData[i].data.concat(stockPrices);
+    }
+    if(marketFunds[i].data.length < a){
+      let temp = marketFunds[i].cost;
+      changeIndustry(marketFunds[i].industry, "neutral", 0, "neutral");
+      const marketFundPrices = generateNoisyArray(temp, marketFunds[i].cost, 12);
+      marketFunds[i].data.pop;
+      marketFunds[i].data = marketFunds[i].data.concat(marketFundPrices);
+    }
+  }
+
+    // Update Changes to Total Earnings and Total Stocks performance along with 
+    // Funds performance
+  updateEarnings();
+}
+
+function updateEarnings(){
+  let tempTotal = Array.from({ length: 12 }, () => cash);
+  let tempStock = Array.from({ length: 12 }, () => 0);
+  let tempFunds = Array.from({ length: 12 }, () => 0);
+  for(let i = 0; i < stockData.length; i++){
+    if(stockData[i].owned > 0){
+      for(let j = stockData[i].data.length - 1; j > stockData[i].data.length - 13; j--){
+        tempStock[(j)%12] += (stockData[i].data[j] * stockData[i].owned);
+      }
+      stocksOwned += stockData[i].cost;
+    }
+    if(marketFunds[i].owned > 0){
+      for(let j = marketFunds[i].data.length - 1; j > marketFunds[i].data.length - 13; j--){
+        tempFunds[(j)%12] += (marketFunds[i].data[j] * marketFunds[i].owned);
+      }
+      marketFundsOwned +=  marketFunds[i].cost;
+    }
+  }
+  
     for(let i = 0; i < 12; i++){
-        tempTotal[i] += tempStock[i] + tempFunds[i];
+      tempTotal[i] += tempStock[i] + tempFunds[i];
     }
     earnings = earnings.concat(tempTotal);
     if(tempStock.length > 0){
-        stocksOwned = tempStock[tempStock.length - 1];
+      stocksOwned = tempStock[tempStock.length - 1];
     }
     if(tempFunds.length > 0){
-        marketFundsOwned = tempFunds[tempFunds.length - 1];   
+      marketFundsOwned = tempFunds[tempFunds.length - 1];   
     }
+
 }
 
 function generateNoisyArray(first, last, length) {
@@ -478,55 +479,63 @@ function toggleVisibility(element) {
   }
 }
 
+const nextPeriod = document.getElementById("nextPeriod");
+const s1 = document.getElementById("s1");
+const s2 = document.getElementById("s2");
+const s3 = document.getElementById("s3");
+const s4 = document.getElementById("s4");
+const s5 = document.getElementById("s5");
 const performance = document.getElementById("Portfolio");
 const change = document.getElementById("Change");
+const rangeData = document.getElementById("modalRange");
+const modal = document.getElementById("myModal");
+const currentValueSpan = document.getElementById('currentValue');
+const closeModal = document.getElementById("close");
+const execute = document.getElementById("execute");
+const stock1Symbol = document.getElementById("stock1Symbol");
+const stock1Owned = document.getElementById("stock1Owned");
+const stock1Price = document.getElementById("stock1Price");
+const stock2Symbol = document.getElementById("stock2Symbol");
+const stock2Owned = document.getElementById("stock2Owned");
+const stock2Price = document.getElementById("stock2Price");
+const stock3Symbol = document.getElementById("stock3Symbol");
+const stock3Owned = document.getElementById("stock3Owned");
+const stock3Price = document.getElementById("stock3Price");
+const stock4Symbol = document.getElementById("stock4Symbol");
+const stock4Owned = document.getElementById("stock4Owned");
+const stock4Price = document.getElementById("stock4Price");
+const stock5Symbol = document.getElementById("stock5Symbol");
+const stock5Owned = document.getElementById("stock5Owned");
+const stock5Price = document.getElementById("stock5Price");
+const stock6Symbol = document.getElementById("stock6Symbol");
+const stock6Owned = document.getElementById("stock6Owned");
+const stock6Price = document.getElementById("stock6Price");
+let xValues = Array.from({ length: earnings.length }, (_,index) => index);
+let storyArray = [s1,s2,s3,s4,s5];
 
-stocksOperations("BioPharm Corp.",1, true);
-stocksOperations("DeltaEnergy Ltd.", 1, true);
-stocksOperations("CloudCom Systems",1, true);
-stocksOperations("EcoFoods Group", 1, true);
-stocksOperations("Fusion Motors Inc.",1, true);
-stocksOperations("GreenTech Solutions", 1, true);
-run();
-
+let what = [];
 var color;
 if(earnings[earnings.length - 1] < earnings[0]){
     color = "rgb(255, 80, 0)";
 }else{
     color = "rgb(0, 200, 5)";
 }
-
-performance.textContent = "$" + earnings[earnings.length - 1].toLocaleString();
-if(earnings[earnings.length -1] - earnings[0] >= 0){
-  change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
-}else{
-  change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
-}
 change.style.color = color;
-
-function addData(chart, label, newData) {
-  chart.data.labels.push(label);
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(newData);
-  });
-  chart.update();
-}
-
-let xValues = Array.from({ length: earnings.length }, (_,index) => index);
 
 // Create main chart displaying portfolio performance
 let mainChart = new Chart("mainChart", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: "Portfolio Performance",
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: earnings
-      }]
+    labels: xValues,
+    datasets: [{
+      label: "Portfolio Performance",
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: earnings,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -537,28 +546,38 @@ let mainChart = new Chart("mainChart", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, earnings), 
-          max: Math.max.apply(null, earnings)
+          min: Math.min.apply(null, earnings),
+          max: Math.max.apply(null, earnings),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
+
 
 var barColors = [
   "rgb(0, 200, 5)",
@@ -640,21 +659,154 @@ let secondPie = new Chart("specificPortfolio", {
   }
 });
 
-const s1 = document.getElementById("s1");
-const s2 = document.getElementById("s2");
-const s3 = document.getElementById("s3");
-const s4 = document.getElementById("s4");
-const s5 = document.getElementById("s5");
-let storyArray = [s1,s2,s3,s4,s5];
-for(let i = 0; i < 5; i++){
-  if(i < 2){
-    storyArray[i].textContent = listofNews[i].company + " " + listofNews[i].news;
-  }else{
-    storyArray[i].textContent = listofNews[i].industry + " Industry: " + listofNews[i].news;
-  }
+function updatePerformances(){
+  updateEarnings();
+  if(earnings[earnings.length - 1] < earnings[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+        color = "rgb(0, 200, 5)";
+    }
+    performance.textContent = "$" + earnings[earnings.length - 1];
+    if(earnings[earnings.length -1] - earnings[0] >= 0){
+      change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
+    }else{
+      change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
+    }
+    change.style.color = color;
+    xValues = Array.from({ length: earnings.length }, (_,index) => index);
+    mainChart.data.datasets[0].data = earnings;
+    mainChart.data.datasets[0].backgroundColor = color;
+    mainChart.data.datasets[0].borderColor = color;
+    mainChart.data.labels = xValues;
+    mainChart.scales.y.ticks.min = Math.min.apply(null, earnings);
+    mainChart.scales.y.ticks.max = Math.max.apply(null, earnings);
+    mainChart.update();
+
+    if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock1.data.datasets[0].data = stockData[0].data;
+    stock1.data.datasets[0].backgroundColor = color;
+    stock1.data.datasets[0].borderColor = color;
+    stock1.data.labels = xValues;
+    stock1.scales.y.ticks.min = Math.min.apply(null, stockData[0]);
+    stock1.scales.y.ticks.max = Math.max.apply(null, stockData[0]);
+    stock1.update();
+    
+    if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock2.data.datasets[0].data = stockData[1].data;
+    stock2.data.datasets[0].backgroundColor = color;
+    stock2.data.datasets[0].borderColor = color;
+    stock2.data.labels = xValues;
+    stock2.scales.y.ticks.min = Math.min.apply(null, stockData[1]);
+    stock2.scales.y.ticks.max = Math.max.apply(null, stockData[1]);
+    stock2.update();
+
+    if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock3.data.datasets[0].data = stockData[2].data;
+    stock3.data.datasets[0].backgroundColor = color;
+    stock3.data.datasets[0].borderColor = color;
+    stock3.data.labels = xValues;
+    stock3.scales.y.ticks.min = Math.min.apply(null, stockData[2]);
+    stock3.scales.y.ticks.max = Math.max.apply(null, stockData[2]);
+    stock3.update();
+
+    if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock4.data.datasets[0].data = stockData[3].data;
+    stock4.data.datasets[0].backgroundColor = color;
+    stock4.data.datasets[0].borderColor = color;
+    stock4.data.labels = xValues;
+    stock4.scales.y.ticks.min = Math.min.apply(null, stockData[3]);
+    stock4.scales.y.ticks.max = Math.max.apply(null, stockData[3]);
+    stock4.update();
+
+    if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock5.data.datasets[0].data = stockData[4].data;
+    stock5.data.datasets[0].backgroundColor = color;
+    stock5.data.datasets[0].borderColor = color;
+    stock5.data.labels = xValues;
+    stock5.scales.y.ticks.min = Math.min.apply(null, stockData[4]);
+    stock5.scales.y.ticks.max = Math.max.apply(null, stockData[4]);
+    stock5.update();
+    
+    if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
+      color = "rgb(255, 80, 0)";
+    }else{
+      color = "rgb(0, 200, 5)";
+    }
+    stock6.data.datasets[0].data = stockData[5].data;
+    stock6.data.datasets[0].backgroundColor = color;
+    stock6.data.datasets[0].borderColor = color;
+    stock6.data.labels = xValues;
+    stock6.scales.y.ticks.min = Math.min.apply(null, stockData[5]);
+    stock6.scales.y.ticks.max = Math.max.apply(null, stockData[5]);
+    stock6.update();
+  
+
+  console.log(earnings);
+  console.log(stockData[0].data);
+
+  period++;
 }
 
-const modal = document.getElementById("myModal");
+function updatePieCharts(){
+  secondPieData = [];
+  for(let i = 0; i < 12; i++){
+    if(i < 6 && stockData[i].owned > 0){
+      secondPieData.push(stockData[i].owned);
+    }else if(i >= 6 && marketFunds[i%6].owned > 0){
+      secondPieData.push(marketFunds[i%6].owned);
+    }
+  }
+  secondPie.data.datasets[0].data = secondPieData;
+  secondPie.update();
+  updateEarnings;
+  console.log(stocksOwned);
+  console.log(marketFundsOwned);
+  firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
+  firstPie.update();
+  stock1Owned.textContent = stockData[0].owned + " shares";
+  stock2Owned.textContent = stockData[1].owned + " shares";
+  stock3Owned.textContent = stockData[2].owned + " shares";
+  stock4Owned.textContent = stockData[3].owned + " shares";
+  stock5Owned.textContent = stockData[4].owned + " shares";
+  stock6Owned.textContent = stockData[5].owned + " shares";
+}
+
+  // Add an event listener to the range input to update the span when the value changes
+rangeData.addEventListener('input', function() {
+  currentValueSpan.textContent = this.value + " shares";
+  what[2] = Number(rangeData.value);
+});
+
+closeModal.addEventListener('click', function(){
+  currentValueSpan.textContent = "0 shares";
+});
+
+execute.addEventListener('click', function(){
+  stocksOperations(what[0], what[2], what[3]);
+  updatePieCharts();
+  currentValueSpan.textContent = "0 shares";
+  what[1].click();
+});
 
 // STOCK 1
 if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
@@ -662,9 +814,7 @@ if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock1Symbol = document.getElementById("stock1Symbol");
-const stock1Owned = document.getElementById("stock1Owned");
-const stock1Price = document.getElementById("stock1Price");
+
 var trade1 = document.getElementById("trade1");
 var buy1 = document.getElementById("buy1");
 var sell1 = document.getElementById("sell1");
@@ -674,30 +824,39 @@ stock1Price.textContent = "$" + stockData[0].cost;
 trade1.style.backgroundColor = color;
 buy1.style.backgroundColor = color;
 sell1.style.backgroundColor = color;
-
+buy1.addEventListener('click', function() {
+  what[0] = stockData[0].name;
+  what[3] = true;
+  what[1] = trade1;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell1.addEventListener('click', function(){
+  what[0] = stockData[0].name;
+  what[3] = false;
+  what[1] = trade1;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade1.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy1);
   toggleVisibility(sell1);
 });
 
-buy1.addEventListener("click", function() {
-  toggleVisibility(modal);
-});
-
-
 let stock1 = new Chart("stock1", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[0].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[0].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[0].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[0].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -708,28 +867,38 @@ let stock1 = new Chart("stock1", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
         display: false,
         ticks: {
-          color: "black", 
+          color: "black",
         },
         grid: {
-          color: "black", 
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[0].data), 
-          max: Math.max.apply(null, stockData[0].data)
+          min: Math.min.apply(null, stockData[0].data),
+          max: Math.max.apply(null, stockData[0].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
+
 
 //STOCK 2
 if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
@@ -737,9 +906,6 @@ if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock2Symbol = document.getElementById("stock2Symbol");
-const stock2Owned = document.getElementById("stock2Owned");
-const stock2Price = document.getElementById("stock2Price");
 var trade2 = document.getElementById("trade2");
 var buy2 = document.getElementById("buy2");
 var sell2 = document.getElementById("sell2");
@@ -749,7 +915,20 @@ stock2Price.textContent = "$" + stockData[1].cost;
 trade2.style.backgroundColor = color;
 buy2.style.backgroundColor = color;
 sell2.style.backgroundColor = color;
-
+buy2.addEventListener('click', function() {
+  what[0] = stockData[1].name;
+  what[3] = true;
+  what[1] = trade2;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell2.addEventListener('click', function(){
+  what[0] = stockData[1].name;
+  what[3] = false;
+  what[1] = trade2;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade2.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy2);
@@ -758,15 +937,16 @@ trade2.addEventListener("click", function() {
 let stock2 = new Chart("stock2", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[1].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[1].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[1].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[1].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -777,25 +957,34 @@ let stock2 = new Chart("stock2", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[1].data), 
-          max: Math.max.apply(null, stockData[1].data)
+          min: Math.min.apply(null, stockData[1].data),
+          max: Math.max.apply(null, stockData[1].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
@@ -806,9 +995,6 @@ if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock3Symbol = document.getElementById("stock3Symbol");
-const stock3Owned = document.getElementById("stock3Owned");
-const stock3Price = document.getElementById("stock3Price");
 var trade3 = document.getElementById("trade3");
 var buy3 = document.getElementById("buy3");
 var sell3 = document.getElementById("sell3");
@@ -818,7 +1004,20 @@ stock3Price.textContent = "$" + stockData[2].cost;
 trade3.style.backgroundColor = color;
 buy3.style.backgroundColor = color;
 sell3.style.backgroundColor = color;
-
+buy3.addEventListener('click', function() {
+  what[0] = stockData[2].name;
+  what[3] = true;
+  what[1] = trade3;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell3.addEventListener('click', function(){
+  what[0] = stockData[2].name;
+  what[3] = false;
+  what[1] = trade3;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade3.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy3);
@@ -827,15 +1026,16 @@ trade3.addEventListener("click", function() {
 let stock3 = new Chart("stock3", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[2].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[2].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[2].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[2].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -846,25 +1046,34 @@ let stock3 = new Chart("stock3", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[2].data), 
-          max: Math.max.apply(null, stockData[2].data)
+          min: Math.min.apply(null, stockData[2].data),
+          max: Math.max.apply(null, stockData[2].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
@@ -875,9 +1084,6 @@ if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock4Symbol = document.getElementById("stock4Symbol");
-const stock4Owned = document.getElementById("stock4Owned");
-const stock4Price = document.getElementById("stock4Price");
 var trade4 = document.getElementById("trade4");
 var buy4 = document.getElementById("buy4");
 var sell4 = document.getElementById("sell4");
@@ -887,7 +1093,20 @@ stock4Price.textContent = "$" + stockData[3].cost;
 trade4.style.backgroundColor = color;
 buy4.style.backgroundColor = color;
 sell4.style.backgroundColor = color;
-
+buy4.addEventListener('click', function() {
+  what[0] = stockData[3].name;
+  what[3] = true;
+  what[1] = trade4;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell4.addEventListener('click', function(){
+  what[0] = stockData[3].name;
+  what[3] = false;
+  what[1] = trade4;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade4.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy4);
@@ -896,15 +1115,16 @@ trade4.addEventListener("click", function() {
 let stock4 = new Chart("stock4", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[3].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[3].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[3].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[3].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -915,28 +1135,38 @@ let stock4 = new Chart("stock4", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[3].data), 
-          max: Math.max.apply(null, stockData[3].data)
+          min: Math.min.apply(null, stockData[3].data),
+          max: Math.max.apply(null, stockData[3].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
+
 
 //STOCK 5
 if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
@@ -944,9 +1174,6 @@ if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock5Symbol = document.getElementById("stock5Symbol");
-const stock5Owned = document.getElementById("stock5Owned");
-const stock5Price = document.getElementById("stock5Price");
 var trade5 = document.getElementById("trade5");
 var buy5 = document.getElementById("buy5");
 var sell5 = document.getElementById("sell5");
@@ -956,7 +1183,20 @@ stock5Price.textContent = "$" + stockData[4].cost;
 trade5.style.backgroundColor = color;
 buy5.style.backgroundColor = color;
 sell5.style.backgroundColor = color;
-
+buy5.addEventListener('click', function() {
+  what[0] = stockData[4].name;
+  what[3] = true;
+  what[1] = trade5;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell5.addEventListener('click', function(){
+  what[0] = stockData[4].name;
+  what[3] = false;
+  what[1] = trade5;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade5.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy5);
@@ -965,15 +1205,16 @@ trade5.addEventListener("click", function() {
 let stock5 = new Chart("stock5", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[4].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[4].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[4].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[4].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -984,25 +1225,34 @@ let stock5 = new Chart("stock5", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[4].data), 
-          max: Math.max.apply(null, stockData[4].data)
+          min: Math.min.apply(null, stockData[4].data),
+          max: Math.max.apply(null, stockData[4].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
@@ -1013,9 +1263,6 @@ if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-const stock6Symbol = document.getElementById("stock6Symbol");
-const stock6Owned = document.getElementById("stock6Owned");
-const stock6Price = document.getElementById("stock6Price");
 var trade6 = document.getElementById("trade6");
 var buy6 = document.getElementById("buy6");
 var sell6 = document.getElementById("sell6");
@@ -1025,7 +1272,20 @@ stock6Price.textContent = "$" + stockData[5].cost;
 trade6.style.backgroundColor = color;
 buy6.style.backgroundColor = color;
 sell6.style.backgroundColor = color;
-
+buy6.addEventListener('click', function() {
+  what[0] = stockData[5].name;
+  what[3] = true;
+  what[1] = trade6;
+  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
+  rangeData.value = rangeData.max / 2;
+})
+sell6.addEventListener('click', function(){
+  what[0] = stockData[5].name;
+  what[3] = false;
+  what[1] = trade6;
+  rangeData.max = findStockByName(what[0]).owned;
+  rangeData.value = Math.floor(rangeData.max / 2);
+});
 trade6.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buy6);
@@ -1034,15 +1294,16 @@ trade6.addEventListener("click", function() {
 let stock6 = new Chart("stock6", {
   type: "line",
   data: {
-      labels: xValues,
-      datasets: [{
-        label: stockData[5].name,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        data: stockData[5].data
-      }]
+    labels: xValues,
+    datasets: [{
+      label: stockData[5].name,
+      fill: false,
+      lineTension: 0,
+      backgroundColor: color,
+      borderColor: color,
+      data: stockData[5].data,
+      pointRadius: 0
+    }]
   },
   options: {
     responsive: true,
@@ -1053,28 +1314,171 @@ let stock6 = new Chart("stock6", {
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        enabled: true,
+        mode: 'index',
+        intersect: false,
       }
     },
     scales: {
       x: {
-        display: false, // Hide x-axis
+        display: false,
         ticks: {
-          color: "black", // Set the color of x-axis ticks
+          color: "black",
         },
         grid: {
-          color: "black", // Set the color of x-axis grid lines
+          color: "black",
         },
       },
       y: {
         display: false,
         ticks: {
-          min: Math.min.apply(null, stockData[5].data), 
-          max: Math.max.apply(null, stockData[5].data)
+          min: Math.min.apply(null, stockData[5].data),
+          max: Math.max.apply(null, stockData[5].data),
         }
-      }
+      },
+    },
+    interaction: {
+      mode: 'nearest',
+      intersect: true
     }
   }
 });
+
+nextPeriod.addEventListener('click', function() {
+  results();
+  updatePerformances();
+  updatePieCharts();
+  run();
+  for(let i = 0; i < 5; i++){
+    if(i < 2){
+      storyArray[i].textContent = listofNews[i].company + " " + listofNews[i].news;
+    }else{
+      storyArray[i].textContent = listofNews[i].industry + " Industry: " + listofNews[i].news;
+    }
+  }
+});
+
+run();
+nextPeriod.click();
+
+
+function updatePerformances(){
+  if(earnings[earnings.length - 1] < earnings[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  performance.textContent = "$" + earnings[earnings.length - 1];
+  if(earnings[earnings.length -1] - earnings[0] >= 0){
+    change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
+  }else{
+    change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
+  }
+  change.style.color = color;
+  xValues = Array.from({ length: earnings.length }, (_,index) => index);
+  mainChart.data.datasets[0].data = earnings;
+  mainChart.data.datasets[0].backgroundColor = color;
+  mainChart.data.datasets[0].borderColor = color;
+  mainChart.data.labels = xValues;
+  mainChart.scales.y.ticks.min = Math.min.apply(null, earnings);
+  mainChart.scales.y.ticks.max = Math.max.apply(null, earnings);
+  mainChart.update();
+
+  if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock1.data.datasets[0].data = stockData[0].data;
+  stock1.data.datasets[0].backgroundColor = color;
+  stock1.data.datasets[0].borderColor = color;
+  stock1.data.labels = xValues;
+  stock1.scales.y.ticks.min = Math.min.apply(null, stockData[0]);
+  stock1.scales.y.ticks.max = Math.max.apply(null, stockData[0]);
+  stock1.update();
+  stock1Price.textContent = "$" + stockData[0].cost;
+  
+  if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock2.data.datasets[0].data = stockData[1].data;
+  stock2.data.datasets[0].backgroundColor = color;
+  stock2.data.datasets[0].borderColor = color;
+  stock2.data.labels = xValues;
+  stock2.scales.y.ticks.min = Math.min.apply(null, stockData[1]);
+  stock2.scales.y.ticks.max = Math.max.apply(null, stockData[1]);
+  stock2.update();
+  stock2Price.textContent = "$" + stockData[1].cost;
+
+  if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock3.data.datasets[0].data = stockData[2].data;
+  stock3.data.datasets[0].backgroundColor = color;
+  stock3.data.datasets[0].borderColor = color;
+  stock3.data.labels = xValues;
+  stock3.scales.y.ticks.min = Math.min.apply(null, stockData[2]);
+  stock3.scales.y.ticks.max = Math.max.apply(null, stockData[2]);
+  stock3.update();
+  stock3Price.textContent = "$" + stockData[2].cost;
+
+  if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock4.data.datasets[0].data = stockData[3].data;
+  stock4.data.datasets[0].backgroundColor = color;
+  stock4.data.datasets[0].borderColor = color;
+  stock4.data.labels = xValues;
+  stock4.scales.y.ticks.min = Math.min.apply(null, stockData[3]);
+  stock4.scales.y.ticks.max = Math.max.apply(null, stockData[3]);
+  stock4.update();
+  stock4Price.textContent = "$" + stockData[3].cost;
+
+  if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock5.data.datasets[0].data = stockData[4].data;
+  stock5.data.datasets[0].backgroundColor = color;
+  stock5.data.datasets[0].borderColor = color;
+  stock5.data.labels = xValues;
+  stock5.scales.y.ticks.min = Math.min.apply(null, stockData[4]);
+  stock5.scales.y.ticks.max = Math.max.apply(null, stockData[4]);
+  stock5.update();
+  stock5Price.textContent = "$" + stockData[4].cost;
+  
+  if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock6.data.datasets[0].data = stockData[5].data;
+  stock6.data.datasets[0].backgroundColor = color;
+  stock6.data.datasets[0].borderColor = color;
+  stock6.data.labels = xValues;
+  stock6.scales.y.ticks.min = Math.min.apply(null, stockData[5]);
+  stock6.scales.y.ticks.max = Math.max.apply(null, stockData[5]);
+  stock6.update();
+  stock6Price.textContent = "$" + stockData[5].cost;
+
+  console.log(earnings);
+  console.log(stockData[0].data);
+
+  period++;
+
+}
+
+
+
 
 // Market Fund 1
 if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){

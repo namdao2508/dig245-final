@@ -12,10 +12,16 @@
 
 <body>
     <div class="container-fluid">
-        <div class="row justify-content-start box">
-            <div class="col-2 col-md-1">
+        <div class="row justify-content-center box align-items-center">
+            <div class="col-1"></div>
+            <div class="col-1">
                 <a href="https://namdao2508.github.io/dig245-final/"><img src="assets/img/image 2.png" alt="logo" class="img-fluid"></a>
             </div>
+            <div class="col-8"></div>
+            <div class="col-1">
+                <button type="button" class="btn text-white spaceOut" id="nextPeriod">Next Period</button>
+            </div>
+            <div class="col-1"></div>
         </div>
         <div class="row justify-content-center text-start">
             <div class="col-10">
@@ -24,7 +30,7 @@
         </div>
         <div class="row justify-content-center text-start">
             <div class="col-10">
-                <h5 id="Change"></h5>
+                <h5 id="Change">+ $0</h5>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -73,13 +79,13 @@
                 <h5 id="stock1Price"></h5>
                 <h6 id="stock1Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock1" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade1">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy1">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell1">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy1" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell1" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center spaceOut">
@@ -88,13 +94,13 @@
                 <h5 id="stock2Price"></h5>
                 <h6 id="stock2Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock2" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade2">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy2">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell2">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy2" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell2" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center spaceOut">
@@ -103,13 +109,13 @@
                 <h5 id="stock3Price"></h5>
                 <h6 id="stock3Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock3" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade3">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy3">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell3">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy3" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell3" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center spaceOut">
@@ -118,13 +124,13 @@
                 <h5 id="stock4Price"></h5>
                 <h6 id="stock4Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock4" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade4">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy4">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell4">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy4" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell4" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center spaceOut">
@@ -133,13 +139,13 @@
                 <h5 id="stock5Price"></h5>
                 <h6 id="stock5Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock5" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade5">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy5">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell5">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy5" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell5" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
         <div class="row justify-content-evenly align-items-center spaceOut">
@@ -148,13 +154,13 @@
                 <h5 id="stock6Price"></h5>
                 <h6 id="stock6Owned"></h6>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <canvas id="stock6" style="width:100%; max-height: 100px;"></canvas>
             </div>
             <div class="col-1">
                 <button type="button" class="btn text-white spaceOut" id="trade6">Trade</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="buy6">Buy</button>
-                <button type="button" class="btn text-white d-none spaceOut" id="sell6">Sell</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="buy6" onclick="toggleVisibility(myModal)">Buy</button>
+                <button type="button" class="btn text-white d-none spaceOut" id="sell6" onclick="toggleVisibility(myModal)">Sell</button>
             </div>
         </div>
 
@@ -250,10 +256,24 @@
         </div>
     </div>
 
-  <!-- Modal -->
-  <div id="myModal" class="modal-dialog modal-dialog-centered d-none">
-    <input type="range" id="modalRange">
-  </div>
+    <div id="myModal" class="modal-background container-fluid d-none">
+        <div class="row modal-content">
+          <div class="col-12 text-end">
+            <button type="button" onclick="toggleVisibility(myModal)" id="close" class="btn text-white">✖</button>
+          </div>
+          <div class="col-12 text-center">
+            <h5 class="text-white">Order</h5>
+          </div>
+          <div class="col-12 text-center">
+            <input type="range" id="modalRange" class="form-range" min="0" max="" value="0" step="1">
+            <span id="currentValue">0 shares</span>
+          </div>
+          <div class="col-12 text-center">
+            <button type="button" id="execute" class="btn text-white" onclick="toggleVisibility(myModal)">Execute Order</button>
+          </div>
+        </div>
+    </div>
+  
 
     <!-- load javascript after the page elements render -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
