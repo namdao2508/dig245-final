@@ -301,7 +301,44 @@
             </div>
         </div>
         
-        <div class="d-none" id="bondSection"></div>
+        <div class="d-none" id="bondSection">
+            <div class="row justify-content-evenly align-items-center spaceOut">
+                <div class="col-1">
+                    <h5 id="bond1Symbol"></h5>
+                    <h5 id="bond1Price"></h5>
+                    <h6 id="bond1Owned"></h6>
+                </div>
+                <div class="col-5 d-block" id="togglef6">
+                    <canvas id="bond1" style="width:100%; max-height: 100px;"></canvas>
+                </div>
+                <div class="col-5 d-none" id="descriptf6">
+                    <h5 id="DBond1"></h5>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn text-white spaceOut" id="tradeb1">Trade</button>
+                    <button type="button" class="btn text-white d-none spaceOut" id="buyb1" onclick="toggleVisibility(myModal)">Buy</button>
+                    <button type="button" class="btn text-white d-none spaceOut" id="sellb1" onclick="toggleVisibility(myModal)">Sell</button>
+                </div>
+            </div>
+            <div class="row justify-content-evenly align-items-center spaceOut">
+                <div class="col-1">
+                    <h5 id="bond2Symbol"></h5>
+                    <h5 id="bond2Price"></h5>
+                    <h6 id="bond2Owned"></h6>
+                </div>
+                <div class="col-5 d-block" id="togglef6">
+                    <canvas id="bond2" style="width:100%; max-height: 100px;"></canvas>
+                </div>
+                <div class="col-5 d-none" id="descriptf6">
+                    <h5 id="DBond2"></h5>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn text-white spaceOut" id="tradeb2">Trade</button>
+                    <button type="button" class="btn text-white d-none spaceOut" id="buyb2" onclick="toggleVisibility(myModal)">Buy</button>
+                    <button type="button" class="btn text-white d-none spaceOut" id="sellb2" onclick="toggleVisibility(myModal)">Sell</button>
+                </div>
+            </div>
+        </div>
             
         <div id="myModal" class="modal-background container-fluid d-none">
             <div class="row modal-content">

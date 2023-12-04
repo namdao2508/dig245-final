@@ -586,8 +586,6 @@ const modal = document.getElementById("myModal");
 const currentValueSpan = document.getElementById('currentValue');
 const closeModal = document.getElementById("close");
 const execute = document.getElementById("execute");
-
-
 const selectStock = document.getElementById("selectStock");
 const selectFund = document.getElementById("selectFund");
 const selectBond = document.getElementById("selectBond");
@@ -837,7 +835,6 @@ let mainChart = new Chart("mainChart", {
     }
   }
 });
-
 
 var barColors = [
   "rgb(0, 200, 5)",
@@ -2234,7 +2231,6 @@ let fund6 = new Chart("fund6", {
   }
 });
 
-
 nextPeriod.addEventListener('click', function() {
   results();
   updatePerformances();
@@ -2266,7 +2262,7 @@ function updatePerformances(){
     change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
   }
   change.style.color = color;
-  xValues = Array.from({ length: earnings.length }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`);
+  xValues = mainChart.data.labels.concat(Array.from({ length: 12 }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`));
   mainChart.data.datasets[0].data = earnings;
   mainChart.data.datasets[0].backgroundColor = color;
   mainChart.data.datasets[0].borderColor = color;
