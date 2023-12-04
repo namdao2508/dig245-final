@@ -345,9 +345,6 @@ let marketFundsOwned = 0;
 let bondsOwned = 0;
 let listofNews = [];
 
-//Get Elements By ID -> Stories outlet
-//Get Elements By ID -> Data set for Stocks, Mutual Funds, and Bonds
-
 function run(){
     listofNews = [];
     // This for loop will initialize the news where there can only exist 1 news story for one stock
@@ -573,6 +570,9 @@ function toggleVisibility(element) {
   }, 250);
 }
 
+const start = document.getElementById("start");
+const startWindow = document.getElementById("startWindow");
+const gameWindow = document.getElementById("gameWindow");
 const nextPeriod = document.getElementById("nextPeriod");
 const s1 = document.getElementById("s1");
 const s2 = document.getElementById("s2");
@@ -676,6 +676,15 @@ const sellf6 = document.getElementById("sellf6");
 const togglef6 = document.getElementById("togglef6");
 const descriptf6 = document.getElementById("descriptf6");
 const DFund6 = document.getElementById("DFund6");
+
+start.addEventListener('click', function(){
+  startWindow.classList.add("d-none");
+  startWindow.classList.remove("d-block");
+  gameWindow.classList.remove("d-none");
+  gameWindow.classList.add("d-block");
+  nextPeriod.classList.remove("d-none");
+  nextPeriod.classList.add("d-block");
+});
 
 selectStock.addEventListener('mouseover', function(){
   selectStock.style.opacity = 0.5;
@@ -887,16 +896,6 @@ var barColors = [
 
 let legendStockNames = [];
 let secondPieData = [];
-for(let i = 0; i < 12; i++){
-  if(i < 6 && stockData[i].owned > 0){
-    legendStockNames.push(stockData[i].name);
-    secondPieData.push(stockData[i].owned * stockData[i].cost);
-  }else if(i >= 6 && marketFunds[i%6].owned > 0){
-    legendStockNames.push(marketFunds[i%6].name);
-    secondPieData.push(marketFunds[i%6].owned * marketFunds[i%6].cost);
-  }
-}
-console.log(legendStockNames);
 
 let secondPie = new Chart("specificPortfolio", {
   type: "pie",
@@ -916,7 +915,7 @@ let secondPie = new Chart("specificPortfolio", {
       title: {
         display: true,
         text: 'Equity Portfolio',
-        color: 'white', // Set the title color to white
+        color: 'white', 
         font: {
           family: 'Avenir',
         }
@@ -924,6 +923,10 @@ let secondPie = new Chart("specificPortfolio", {
     }
   }
 });
+if(secondPie.data.labels.length == 0){
+  secondPie.options.plugins.title.display = false;
+  secondPie.update();
+}
 
 function updatePerformances(){
   updateEarnings(false);
@@ -1043,6 +1046,9 @@ function updatePieCharts(){
   }
   secondPie.data.labels = legendStockNames;
   secondPie.data.datasets[0].data = secondPieData;
+  if(secondPie.data.datasets[0].data.length > 0){
+    secondPie.options.plugins.title.display = true;
+  }
   secondPie.update();
   updateEarnings(false);
   firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
