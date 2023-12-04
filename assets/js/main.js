@@ -1,4 +1,5 @@
 let period = 0;
+let year = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
 
 const stockData = [
   { 
@@ -569,7 +570,7 @@ function toggleVisibility(element) {
       element.classList.remove("d-block");
       element.classList.add("d-none");
     }
-  }, 150);
+  }, 250);
 }
 
 const nextPeriod = document.getElementById("nextPeriod");
@@ -585,6 +586,14 @@ const modal = document.getElementById("myModal");
 const currentValueSpan = document.getElementById('currentValue');
 const closeModal = document.getElementById("close");
 const execute = document.getElementById("execute");
+
+
+const selectStock = document.getElementById("selectStock");
+const selectFund = document.getElementById("selectFund");
+const selectBond = document.getElementById("selectBond");
+const stockSection = document.getElementById("stockSection");
+const fundSection = document.getElementById("fundSection");
+const bondSection = document.getElementById("bondSection");
 
 const stock1Symbol = document.getElementById("stock1Symbol");
 const stock1Owned = document.getElementById("stock1Owned");
@@ -628,14 +637,140 @@ const toggle6 = document.getElementById("toggle6");
 const descript6 = document.getElementById("descript6");
 const DStock6 = document.getElementById("DStock6");
 
+const tradef1 = document.getElementById("tradef1");
+const buyf1 = document.getElementById("buyf1");
+const sellf1 = document.getElementById("sellf1");
+const togglef1 = document.getElementById("togglef1");
+const descriptf1 = document.getElementById("descriptf1");
+const DFund1 = document.getElementById("DFund1");
+
+const tradef2 = document.getElementById("tradef2");
+const buyf2 = document.getElementById("buyf2");
+const sellf2 = document.getElementById("sellf2");
+const togglef2 = document.getElementById("togglef2");
+const descriptf2 = document.getElementById("descriptf2");
+const DFund2 = document.getElementById("DFund2");
+
+const tradef3 = document.getElementById("tradef3");
+const buyf3 = document.getElementById("buyf3");
+const sellf3 = document.getElementById("sellf3");
+const togglef3 = document.getElementById("togglef3");
+const descriptf3 = document.getElementById("descriptf3");
+const DFund3 = document.getElementById("DFund3");
+
+const tradef4 = document.getElementById("tradef4");
+const buyf4 = document.getElementById("buyf4");
+const sellf4 = document.getElementById("sellf4");
+const togglef4 = document.getElementById("togglef4");
+const descriptf4 = document.getElementById("descriptf4");
+const DFund4 = document.getElementById("DFund4");
+
+const tradef5 = document.getElementById("tradef5");
+const buyf5 = document.getElementById("buyf5");
+const sellf5 = document.getElementById("sellf5");
+const togglef5 = document.getElementById("togglef5");
+const descriptf5 = document.getElementById("descriptf5");
+const DFund5 = document.getElementById("DFund5");
+
+const tradef6 = document.getElementById("tradef6");
+const buyf6 = document.getElementById("buyf6");
+const sellf6 = document.getElementById("sellf6");
+const togglef6 = document.getElementById("togglef6");
+const descriptf6 = document.getElementById("descriptf6");
+const DFund6 = document.getElementById("DFund6");
+
+selectStock.addEventListener('mouseover', function(){
+  selectStock.style.opacity = 0.5;
+})
+
+selectStock.addEventListener('mouseout', function(){
+  selectStock.style.opacity = 1;
+})
+
+selectStock.addEventListener('click', function(){
+  if(stockSection.classList.contains("d-none")){
+    stockSection.classList.remove("d-none");
+    stockSection.classList.add("d-block");
+    selectStock.style.color = "rgb(0, 200, 5)";
+  }
+  if(fundSection.classList.contains("d-block")){
+    fundSection.classList.remove("d-block");
+    fundSection.classList.add("d-none");
+    selectFund.style.color = "white";
+  }
+  if(bondSection.classList.contains("d-block")){
+    bondSection.classList.remove("d-block");
+    bondSection.classList.add("d-none");
+    selectBond.style.color = "white";
+  }
+})
+
+selectFund.addEventListener('mouseover', function(){
+  selectFund.style.opacity = 0.5;
+})
+
+selectFund.addEventListener('mouseout', function(){
+  selectFund.style.opacity = 1;
+})
+
+selectFund.addEventListener('click', function(){
+  if(fundSection.classList.contains("d-none")){
+    fundSection.classList.remove("d-none");
+    fundSection.classList.add("d-block");
+    selectFund.style.color = "rgb(0, 200, 5)";
+  }
+  if(stockSection.classList.contains("d-block")){
+    stockSection.classList.remove("d-block");
+    stockSection.classList.add("d-none");
+    selectStock.style.color = "white";
+  }
+  if(bondSection.classList.contains("d-block")){
+    bondSection.classList.remove("d-block");
+    bondSection.classList.add("d-none");
+    selectBond.style.color = "white";
+  }
+})
+
+selectBond.addEventListener('mouseover', function(){
+  selectBond.style.opacity = 0.5;
+})
+
+selectBond.addEventListener('mouseout', function(){
+  selectBond.style.opacity = 1;
+})
+
+selectBond.addEventListener('click', function(){
+  if(bondSection.classList.contains("d-none")){
+    bondSection.classList.remove("d-none");
+    bondSection.classList.add("d-block");
+    selectBond.style.color = "rgb(0, 200, 5)";
+  }
+  if(stockSection.classList.contains("d-block")){
+    stockSection.classList.remove("d-block");
+    stockSection.classList.add("d-none");
+    selectStock.style.color = "white";
+  }
+  if(fundSection.classList.contains("d-block")){
+    fundSection.classList.remove("d-block");
+    fundSection.classList.add("d-none");
+    selectFund.style.color = "white";
+  }
+})
+
 DStock1.textContent = stockData[0].description;
 DStock2.textContent = stockData[1].description;
 DStock3.textContent = stockData[2].description;
 DStock4.textContent = stockData[3].description;
 DStock5.textContent = stockData[4].description;
 DStock6.textContent = stockData[5].description;
+DFund1.textContent = marketFunds[0].description;
+DFund2.textContent = marketFunds[1].description;
+DFund3.textContent = marketFunds[2].description;
+DFund4.textContent = marketFunds[3].description;
+DFund5.textContent = marketFunds[4].description;
+DFund6.textContent = marketFunds[5].description;
 
-let xValues = Array.from({ length: earnings.length }, (_,index) => index);
+let xValues = Array.from({ length: earnings.length }, (_, index) => ((index + 1) % 12) + 1);
 let storyArray = [s1,s2,s3,s4,s5];
 
 let what = [];
@@ -807,7 +942,7 @@ function updatePerformances(){
     change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
   }
   change.style.color = color;
-  xValues = Array.from({ length: earnings.length }, (_,index) => index);
+  xValues = Array.from({ length: earnings.length }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`);
   mainChart.data.datasets[0].data = earnings;
   mainChart.data.datasets[0].backgroundColor = color;
   mainChart.data.datasets[0].borderColor = color;
@@ -1541,9 +1676,6 @@ if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef1 = document.getElementById("tradef1");
-var buyf1 = document.getElementById("buyf1");
-var sellf1 = document.getElementById("sellf1");
 fund1Symbol.textContent = marketFunds[0].name + " (" + marketFunds[0].symbol + ")";
 fund1Owned.textContent = marketFunds[0].owned + " shares";
 fund1Price.textContent = "$" + marketFunds[0].cost;
@@ -1638,9 +1770,6 @@ if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef2 = document.getElementById("tradef2");
-var buyf2 = document.getElementById("buyf2");
-var sellf2 = document.getElementById("sellf2");
 fund2Symbol.textContent = marketFunds[1].name + " (" + marketFunds[1].symbol + ")";
 fund2Owned.textContent = marketFunds[1].owned + " shares";
 fund2Price.textContent = "$" + marketFunds[1].cost;
@@ -1735,9 +1864,6 @@ if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef3 = document.getElementById("tradef3");
-var buyf3 = document.getElementById("buyf3");
-var sellf3 = document.getElementById("sellf3");
 fund3Symbol.textContent = marketFunds[2].name + " (" + marketFunds[2].symbol + ")";
 fund3Owned.textContent = marketFunds[2].owned + " shares";
 fund3Price.textContent = "$" + marketFunds[2].cost;
@@ -1832,9 +1958,6 @@ if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef4 = document.getElementById("tradef4");
-var buyf4 = document.getElementById("buyf4");
-var sellf4 = document.getElementById("sellf4");
 fund4Symbol.textContent = marketFunds[3].name + " (" + marketFunds[3].symbol + ")";
 fund4Owned.textContent = marketFunds[3].owned + " shares";
 fund4Price.textContent = "$" + marketFunds[3].cost;
@@ -1929,9 +2052,6 @@ if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef5 = document.getElementById("tradef5");
-var buyf5 = document.getElementById("buyf5");
-var sellf5 = document.getElementById("sellf5");
 fund5Symbol.textContent = marketFunds[4].name + " (" + marketFunds[4].symbol + ")";
 fund5Owned.textContent = marketFunds[4].owned + " shares";
 fund5Price.textContent = "$" + marketFunds[4].cost;
@@ -2026,9 +2146,6 @@ if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
 }else{
   color = "rgb(0, 200, 5)";
 }
-var tradef6 = document.getElementById("tradef6");
-var buyf6 = document.getElementById("buyf6");
-var sellf6 = document.getElementById("sellf6");
 fund6Symbol.textContent = marketFunds[5].name + " (" + marketFunds[5].symbol + ")";
 fund6Owned.textContent = marketFunds[5].owned + " shares";
 fund6Price.textContent = "$" + marketFunds[5].cost;
@@ -2149,7 +2266,7 @@ function updatePerformances(){
     change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
   }
   change.style.color = color;
-  xValues = Array.from({ length: earnings.length }, (_,index) => index);
+  xValues = Array.from({ length: earnings.length }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`);
   mainChart.data.datasets[0].data = earnings;
   mainChart.data.datasets[0].backgroundColor = color;
   mainChart.data.datasets[0].borderColor = color;
@@ -2172,6 +2289,9 @@ function updatePerformances(){
   stock1.scales.y.ticks.max = Math.max.apply(null, stockData[0]);
   stock1.update();
   stock1Price.textContent = "$" + stockData[0].cost;
+  trade1.style.backgroundColor = color;
+  buy1.style.backgroundColor = color;
+  sell1.style.backgroundColor = color;
   
   //Stock 2
   if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
@@ -2187,6 +2307,9 @@ function updatePerformances(){
   stock2.scales.y.ticks.max = Math.max.apply(null, stockData[1]);
   stock2.update();
   stock2Price.textContent = "$" + stockData[1].cost;
+  trade2.style.backgroundColor = color;
+  buy2.style.backgroundColor = color;
+  sell2.style.backgroundColor = color; 
 
   //Stock 3
   if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
@@ -2202,6 +2325,9 @@ function updatePerformances(){
   stock3.scales.y.ticks.max = Math.max.apply(null, stockData[2]);
   stock3.update();
   stock3Price.textContent = "$" + stockData[2].cost;
+  trade3.style.backgroundColor = color;
+  buy3.style.backgroundColor = color;
+  sell3.style.backgroundColor = color; 
 
   //Stock 4
   if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
@@ -2217,6 +2343,9 @@ function updatePerformances(){
   stock4.scales.y.ticks.max = Math.max.apply(null, stockData[3]);
   stock4.update();
   stock4Price.textContent = "$" + stockData[3].cost;
+  trade4.style.backgroundColor = color;
+  buy4.style.backgroundColor = color;
+  sell4.style.backgroundColor = color; 
 
   //Stock 5
   if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
@@ -2232,6 +2361,9 @@ function updatePerformances(){
   stock5.scales.y.ticks.max = Math.max.apply(null, stockData[4]);
   stock5.update();
   stock5Price.textContent = "$" + stockData[4].cost;
+  trade5.style.backgroundColor = color;
+  buy5.style.backgroundColor = color;
+  sell5.style.backgroundColor = color; 
   
   //Stock 6
   if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
@@ -2247,6 +2379,9 @@ function updatePerformances(){
   stock6.scales.y.ticks.max = Math.max.apply(null, stockData[5]);
   stock6.update();
   stock6Price.textContent = "$" + stockData[5].cost;
+  trade6.style.backgroundColor = color;
+  buy6.style.backgroundColor = color;
+  sell6.style.backgroundColor = color; 
 
   //Fund 1
   if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
@@ -2262,6 +2397,9 @@ function updatePerformances(){
   fund1.scales.y.ticks.max = Math.max.apply(null, marketFunds[0]);
   fund1.update();
   fund1Price.textContent = "$" + marketFunds[0].cost;
+  tradef1.style.backgroundColor = color;
+  buyf1.style.backgroundColor = color;
+  sellf1.style.backgroundColor = color; 
 
   //Fund 2
   if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
@@ -2277,6 +2415,9 @@ function updatePerformances(){
   fund2.scales.y.ticks.max = Math.max.apply(null, marketFunds[1]);
   fund2.update();
   fund2Price.textContent = "$" + marketFunds[1].cost;
+  tradef2.style.backgroundColor = color;
+  buyf2.style.backgroundColor = color;
+  sellf2.style.backgroundColor = color; 
 
   //Fund 3
   if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
@@ -2292,6 +2433,9 @@ function updatePerformances(){
   fund3.scales.y.ticks.max = Math.max.apply(null, marketFunds[2]);
   fund3.update();
   fund3Price.textContent = "$" + marketFunds[2].cost;
+  tradef3.style.backgroundColor = color;
+  buyf3.style.backgroundColor = color;
+  sellf3.style.backgroundColor = color; 
 
   //Fund 4
   if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
@@ -2307,6 +2451,9 @@ function updatePerformances(){
   fund4.scales.y.ticks.max = Math.max.apply(null, marketFunds[3]);
   fund4.update();
   fund4Price.textContent = "$" + marketFunds[3].cost;
+  tradef4.style.backgroundColor = color;
+  buyf4.style.backgroundColor = color;
+  sellf4.style.backgroundColor = color; 
 
   //Fund 5
   if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
@@ -2322,6 +2469,9 @@ function updatePerformances(){
   fund5.scales.y.ticks.max = Math.max.apply(null, marketFunds[4]);
   fund5.update();
   fund5Price.textContent = "$" + marketFunds[4].cost;
+  tradef5.style.backgroundColor = color;
+  buyf5.style.backgroundColor = color;
+  sellf5.style.backgroundColor = color; 
 
   //Fund 6
   if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
@@ -2337,9 +2487,9 @@ function updatePerformances(){
   fund6.scales.y.ticks.max = Math.max.apply(null, marketFunds[5]);
   fund6.update();
   fund6Price.textContent = "$" + marketFunds[5].cost;
-
-  //console.log(bonds[0].cost);
-  //console.log(bonds[1].cost);
+  tradef6.style.backgroundColor = color;
+  buyf6.style.backgroundColor = color;
+  sellf6.style.backgroundColor = color; 
 
   period++;
 }
