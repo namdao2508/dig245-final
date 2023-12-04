@@ -401,15 +401,6 @@ function run(){
             }
         }
     }
-    // localStorage.setItem("earnings", JSON.stringify(earnings));
-    // localStorage.setItem("cash", JSON.stringify(cash));
-    // localStorage.setItem("earnings", JSON.stringify(earnings));
-    // localStorage.setItem("cash", JSON.stringify(stocksOwned));
-    // localStorage.setItem("earnings", JSON.stringify(marketFundsOwned));
-    // localStorage.setItem("cash", JSON.stringify(stockData));
-    // localStorage.setItem("earnings", JSON.stringify(marketFunds));
-    // localStorage.setItem("cash", JSON.stringify(stockNews));
-    // localStorage.setItem("industryNewsWithBondEffect", JSON.stringify(industryNewsWithBondEffect));
 }
 
 function results(){
@@ -933,6 +924,288 @@ let secondPie = new Chart("specificPortfolio", {
 if(secondPie.data.labels.length == 0){
   secondPie.options.plugins.title.display = false;
   secondPie.update();
+}
+
+function updatePerformances(){
+  if(earnings[earnings.length - 1] < earnings[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  performance.textContent = "$" + earnings[earnings.length - 1];
+  if(earnings[earnings.length -1] - earnings[0] >= 0){
+    change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
+  }else{
+    change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
+  }
+  change.style.color = color;
+  xValues = mainChart.data.labels.concat(Array.from({ length: 12 }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`));
+  mainChart.data.datasets[0].data = earnings;
+  mainChart.data.datasets[0].backgroundColor = color;
+  mainChart.data.datasets[0].borderColor = color;
+  mainChart.data.labels = xValues;
+  mainChart.scales.y.ticks.min = Math.min.apply(null, earnings);
+  mainChart.scales.y.ticks.max = Math.max.apply(null, earnings);
+  mainChart.update();
+
+  //Stock 1
+  if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock1.data.datasets[0].data = stockData[0].data;
+  stock1.data.datasets[0].backgroundColor = color;
+  stock1.data.datasets[0].borderColor = color;
+  stock1.data.labels = xValues;
+  stock1.scales.y.ticks.min = Math.min.apply(null, stockData[0]);
+  stock1.scales.y.ticks.max = Math.max.apply(null, stockData[0]);
+  stock1.update();
+  stock1Price.textContent = "$" + stockData[0].cost;
+  trade1.style.backgroundColor = color;
+  buy1.style.backgroundColor = color;
+  sell1.style.backgroundColor = color;
+  
+  //Stock 2
+  if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock2.data.datasets[0].data = stockData[1].data;
+  stock2.data.datasets[0].backgroundColor = color;
+  stock2.data.datasets[0].borderColor = color;
+  stock2.data.labels = xValues;
+  stock2.scales.y.ticks.min = Math.min.apply(null, stockData[1]);
+  stock2.scales.y.ticks.max = Math.max.apply(null, stockData[1]);
+  stock2.update();
+  stock2Price.textContent = "$" + stockData[1].cost;
+  trade2.style.backgroundColor = color;
+  buy2.style.backgroundColor = color;
+  sell2.style.backgroundColor = color; 
+
+  //Stock 3
+  if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock3.data.datasets[0].data = stockData[2].data;
+  stock3.data.datasets[0].backgroundColor = color;
+  stock3.data.datasets[0].borderColor = color;
+  stock3.data.labels = xValues;
+  stock3.scales.y.ticks.min = Math.min.apply(null, stockData[2]);
+  stock3.scales.y.ticks.max = Math.max.apply(null, stockData[2]);
+  stock3.update();
+  stock3Price.textContent = "$" + stockData[2].cost;
+  trade3.style.backgroundColor = color;
+  buy3.style.backgroundColor = color;
+  sell3.style.backgroundColor = color; 
+
+  //Stock 4
+  if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock4.data.datasets[0].data = stockData[3].data;
+  stock4.data.datasets[0].backgroundColor = color;
+  stock4.data.datasets[0].borderColor = color;
+  stock4.data.labels = xValues;
+  stock4.scales.y.ticks.min = Math.min.apply(null, stockData[3]);
+  stock4.scales.y.ticks.max = Math.max.apply(null, stockData[3]);
+  stock4.update();
+  stock4Price.textContent = "$" + stockData[3].cost;
+  trade4.style.backgroundColor = color;
+  buy4.style.backgroundColor = color;
+  sell4.style.backgroundColor = color; 
+
+  //Stock 5
+  if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock5.data.datasets[0].data = stockData[4].data;
+  stock5.data.datasets[0].backgroundColor = color;
+  stock5.data.datasets[0].borderColor = color;
+  stock5.data.labels = xValues;
+  stock5.scales.y.ticks.min = Math.min.apply(null, stockData[4]);
+  stock5.scales.y.ticks.max = Math.max.apply(null, stockData[4]);
+  stock5.update();
+  stock5Price.textContent = "$" + stockData[4].cost;
+  trade5.style.backgroundColor = color;
+  buy5.style.backgroundColor = color;
+  sell5.style.backgroundColor = color; 
+  
+  //Stock 6
+  if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  stock6.data.datasets[0].data = stockData[5].data;
+  stock6.data.datasets[0].backgroundColor = color;
+  stock6.data.datasets[0].borderColor = color;
+  stock6.data.labels = xValues;
+  stock6.scales.y.ticks.min = Math.min.apply(null, stockData[5]);
+  stock6.scales.y.ticks.max = Math.max.apply(null, stockData[5]);
+  stock6.update();
+  stock6Price.textContent = "$" + stockData[5].cost;
+  trade6.style.backgroundColor = color;
+  buy6.style.backgroundColor = color;
+  sell6.style.backgroundColor = color; 
+
+  //Fund 1
+  if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund1.data.datasets[0].data = marketFunds[0].data;
+  fund1.data.datasets[0].backgroundColor = color;
+  fund1.data.datasets[0].borderColor = color;
+  fund1.data.labels = xValues;
+  fund1.scales.y.ticks.min = Math.min.apply(null, marketFunds[0]);
+  fund1.scales.y.ticks.max = Math.max.apply(null, marketFunds[0]);
+  fund1.update();
+  fund1Price.textContent = "$" + marketFunds[0].cost;
+  tradef1.style.backgroundColor = color;
+  buyf1.style.backgroundColor = color;
+  sellf1.style.backgroundColor = color; 
+
+  //Fund 2
+  if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund2.data.datasets[0].data = marketFunds[1].data;
+  fund2.data.datasets[0].backgroundColor = color;
+  fund2.data.datasets[0].borderColor = color;
+  fund2.data.labels = xValues;
+  fund2.scales.y.ticks.min = Math.min.apply(null, marketFunds[1]);
+  fund2.scales.y.ticks.max = Math.max.apply(null, marketFunds[1]);
+  fund2.update();
+  fund2Price.textContent = "$" + marketFunds[1].cost;
+  tradef2.style.backgroundColor = color;
+  buyf2.style.backgroundColor = color;
+  sellf2.style.backgroundColor = color; 
+
+  //Fund 3
+  if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund3.data.datasets[0].data = marketFunds[2].data;
+  fund3.data.datasets[0].backgroundColor = color;
+  fund3.data.datasets[0].borderColor = color;
+  fund3.data.labels = xValues;
+  fund3.scales.y.ticks.min = Math.min.apply(null, marketFunds[2]);
+  fund3.scales.y.ticks.max = Math.max.apply(null, marketFunds[2]);
+  fund3.update();
+  fund3Price.textContent = "$" + marketFunds[2].cost;
+  tradef3.style.backgroundColor = color;
+  buyf3.style.backgroundColor = color;
+  sellf3.style.backgroundColor = color; 
+
+  //Fund 4
+  if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund4.data.datasets[0].data = marketFunds[3].data;
+  fund4.data.datasets[0].backgroundColor = color;
+  fund4.data.datasets[0].borderColor = color;
+  fund4.data.labels = xValues;
+  fund4.scales.y.ticks.min = Math.min.apply(null, marketFunds[3]);
+  fund4.scales.y.ticks.max = Math.max.apply(null, marketFunds[3]);
+  fund4.update();
+  fund4Price.textContent = "$" + marketFunds[3].cost;
+  tradef4.style.backgroundColor = color;
+  buyf4.style.backgroundColor = color;
+  sellf4.style.backgroundColor = color; 
+
+  //Fund 5
+  if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund5.data.datasets[0].data = marketFunds[4].data;
+  fund5.data.datasets[0].backgroundColor = color;
+  fund5.data.datasets[0].borderColor = color;
+  fund5.data.labels = xValues;
+  fund5.scales.y.ticks.min = Math.min.apply(null, marketFunds[4]);
+  fund5.scales.y.ticks.max = Math.max.apply(null, marketFunds[4]);
+  fund5.update();
+  fund5Price.textContent = "$" + marketFunds[4].cost;
+  tradef5.style.backgroundColor = color;
+  buyf5.style.backgroundColor = color;
+  sellf5.style.backgroundColor = color; 
+
+  //Fund 6
+  if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
+    color = "rgb(255, 80, 0)";
+  }else{
+    color = "rgb(0, 200, 5)";
+  }
+  fund6.data.datasets[0].data = marketFunds[5].data;
+  fund6.data.datasets[0].backgroundColor = color;
+  fund6.data.datasets[0].borderColor = color;
+  fund6.data.labels = xValues;
+  fund6.scales.y.ticks.min = Math.min.apply(null, marketFunds[5]);
+  fund6.scales.y.ticks.max = Math.max.apply(null, marketFunds[5]);
+  fund6.update();
+  fund6Price.textContent = "$" + marketFunds[5].cost;
+  tradef6.style.backgroundColor = color;
+  buyf6.style.backgroundColor = color;
+  sellf6.style.backgroundColor = color; 
+
+  period++;
+  if(period == year.length - 1){
+    nextPeriod.innerHTML = "End Game";
+  }
+}
+
+function updatePieCharts(){
+  let legendStockNames = [];
+  let secondPieData = [];
+  for(let i = 0; i < 12; i++){
+    if(i < 6 && stockData[i].owned > 0){
+      legendStockNames.push(stockData[i].name);
+      secondPieData.push(stockData[i].owned * stockData[i].cost);
+      numStocksInvested.add(stockData[i].name);
+    }else if(i >= 6 && marketFunds[i%6].owned > 0){
+      legendStockNames.push(marketFunds[i%6].name);
+      secondPieData.push(marketFunds[i%6].owned * marketFunds[i%6].cost);
+      numFundsInvested.add(marketFunds[i%6].name);
+    }
+  }
+  secondPie.data.labels = legendStockNames;
+  secondPie.data.datasets[0].data = secondPieData;
+  if(secondPie.data.datasets[0].data.length > 0){
+    secondPie.options.plugins.title.display = true;
+  }
+  secondPie.update();
+  updateEarnings(false);
+  firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
+  firstPie.update();
+  stock1Owned.textContent = stockData[0].owned + " shares";
+  stock2Owned.textContent = stockData[1].owned + " shares";
+  stock3Owned.textContent = stockData[2].owned + " shares";
+  stock4Owned.textContent = stockData[3].owned + " shares";
+  stock5Owned.textContent = stockData[4].owned + " shares";
+  stock6Owned.textContent = stockData[5].owned + " shares";
+
+  fund1Owned.textContent = marketFunds[0].owned + " shares";
+  fund2Owned.textContent = marketFunds[1].owned + " shares";
+  fund3Owned.textContent = marketFunds[2].owned + " shares";
+  fund4Owned.textContent = marketFunds[3].owned + " shares";
+  fund5Owned.textContent = marketFunds[4].owned + " shares";
+  fund6Owned.textContent = marketFunds[5].owned + " shares";
 }
   
 rangeData.addEventListener('input', function() {
@@ -2103,7 +2376,6 @@ let fund6 = new Chart("fund6", {
   }
 });
 
-
 nextPeriod.addEventListener('click', function() {
   results();
   updatePerformances();
@@ -2116,12 +2388,12 @@ nextPeriod.addEventListener('click', function() {
     endWindow.classList.add("d-block");
     nextPeriod.classList.remove("d-block");
     nextPeriod.classList.add("d-none");
-    gameResults1.textContent = "Your porfolio in 2030 is now at " + earnings[earnings.length - 1];
-    let percentageChange = 100 * (earnings[earnings.length - 1] - earnings[0])/earnings[0] 
+    gameResults1.textContent = "Your porfolio in 2030 is now at $" + earnings[earnings.length - 1].toFixed(2);
+    let percentageChange = 100 * ((earnings[earnings.length - 1] - earnings[0])/earnings[0] )
     if(earnings[earnings.length - 1] < earnings[0]){
-      gameResults2.textContent = "This is at a loss of $" + (earnings[earnings.length - 1] - earnings[0]) + " or " + percentageChange + "%";
+      gameResults2.textContent = "This is at a loss of " + percentageChange + "%";
     }else{
-      gameResults2.textContent = "This is at a gain of $" + (earnings[earnings.length - 1] - earnings[0]) + " or " + percentageChange + "%";
+      gameResults2.textContent = "This is at a gain of " + percentageChange + "%";
     }
       gameResults3.textContent = "Overall, you invested in " + numStocksInvested.size + " stocks, " + numFundsInvested.size + " ETFs, and " + numBondsInvested.size + " bonds.";
   }else{
@@ -2134,287 +2406,16 @@ nextPeriod.addEventListener('click', function() {
       }
     }
   }
+  // localStorage.setItem("earnings", JSON.stringify(earnings));
+  // localStorage.setItem("cash", JSON.stringify(cash));
+  // localStorage.setItem("earnings", JSON.stringify(earnings));
+  // localStorage.setItem("cash", JSON.stringify(stocksOwned));
+  // localStorage.setItem("earnings", JSON.stringify(marketFundsOwned));
+  // localStorage.setItem("cash", JSON.stringify(stockData));
+  // localStorage.setItem("earnings", JSON.stringify(marketFunds));
+  // localStorage.setItem("cash", JSON.stringify(stockNews));
+  // localStorage.setItem("industryNewsWithBondEffect", JSON.stringify(industryNewsWithBondEffect));
 });
 
 run();
 nextPeriod.click();
-
-function updatePerformances(){
-  if(earnings[earnings.length - 1] < earnings[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  performance.textContent = "$" + earnings[earnings.length - 1];
-  if(earnings[earnings.length -1] - earnings[0] >= 0){
-    change.textContent = "+ $" + (earnings[earnings.length -1] - earnings[0]).toLocaleString();
-  }else{
-    change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
-  }
-  change.style.color = color;
-  xValues = mainChart.data.labels.concat(Array.from({ length: 12 }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`));
-  mainChart.data.datasets[0].data = earnings;
-  mainChart.data.datasets[0].backgroundColor = color;
-  mainChart.data.datasets[0].borderColor = color;
-  mainChart.data.labels = xValues;
-  mainChart.scales.y.ticks.min = Math.min.apply(null, earnings);
-  mainChart.scales.y.ticks.max = Math.max.apply(null, earnings);
-  mainChart.update();
-
-  //Stock 1
-  if(stockData[0].data[stockData[0].data.length -1] < stockData[0].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock1.data.datasets[0].data = stockData[0].data;
-  stock1.data.datasets[0].backgroundColor = color;
-  stock1.data.datasets[0].borderColor = color;
-  stock1.data.labels = xValues;
-  stock1.scales.y.ticks.min = Math.min.apply(null, stockData[0]);
-  stock1.scales.y.ticks.max = Math.max.apply(null, stockData[0]);
-  stock1.update();
-  stock1Price.textContent = "$" + stockData[0].cost;
-  trade1.style.backgroundColor = color;
-  buy1.style.backgroundColor = color;
-  sell1.style.backgroundColor = color;
-  
-  //Stock 2
-  if(stockData[1].data[stockData[1].data.length -1] < stockData[1].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock2.data.datasets[0].data = stockData[1].data;
-  stock2.data.datasets[0].backgroundColor = color;
-  stock2.data.datasets[0].borderColor = color;
-  stock2.data.labels = xValues;
-  stock2.scales.y.ticks.min = Math.min.apply(null, stockData[1]);
-  stock2.scales.y.ticks.max = Math.max.apply(null, stockData[1]);
-  stock2.update();
-  stock2Price.textContent = "$" + stockData[1].cost;
-  trade2.style.backgroundColor = color;
-  buy2.style.backgroundColor = color;
-  sell2.style.backgroundColor = color; 
-
-  //Stock 3
-  if(stockData[2].data[stockData[2].data.length -1] < stockData[2].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock3.data.datasets[0].data = stockData[2].data;
-  stock3.data.datasets[0].backgroundColor = color;
-  stock3.data.datasets[0].borderColor = color;
-  stock3.data.labels = xValues;
-  stock3.scales.y.ticks.min = Math.min.apply(null, stockData[2]);
-  stock3.scales.y.ticks.max = Math.max.apply(null, stockData[2]);
-  stock3.update();
-  stock3Price.textContent = "$" + stockData[2].cost;
-  trade3.style.backgroundColor = color;
-  buy3.style.backgroundColor = color;
-  sell3.style.backgroundColor = color; 
-
-  //Stock 4
-  if(stockData[3].data[stockData[3].data.length -1] < stockData[3].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock4.data.datasets[0].data = stockData[3].data;
-  stock4.data.datasets[0].backgroundColor = color;
-  stock4.data.datasets[0].borderColor = color;
-  stock4.data.labels = xValues;
-  stock4.scales.y.ticks.min = Math.min.apply(null, stockData[3]);
-  stock4.scales.y.ticks.max = Math.max.apply(null, stockData[3]);
-  stock4.update();
-  stock4Price.textContent = "$" + stockData[3].cost;
-  trade4.style.backgroundColor = color;
-  buy4.style.backgroundColor = color;
-  sell4.style.backgroundColor = color; 
-
-  //Stock 5
-  if(stockData[4].data[stockData[4].data.length -1] < stockData[4].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock5.data.datasets[0].data = stockData[4].data;
-  stock5.data.datasets[0].backgroundColor = color;
-  stock5.data.datasets[0].borderColor = color;
-  stock5.data.labels = xValues;
-  stock5.scales.y.ticks.min = Math.min.apply(null, stockData[4]);
-  stock5.scales.y.ticks.max = Math.max.apply(null, stockData[4]);
-  stock5.update();
-  stock5Price.textContent = "$" + stockData[4].cost;
-  trade5.style.backgroundColor = color;
-  buy5.style.backgroundColor = color;
-  sell5.style.backgroundColor = color; 
-  
-  //Stock 6
-  if(stockData[5].data[stockData[5].data.length -1] < stockData[5].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  stock6.data.datasets[0].data = stockData[5].data;
-  stock6.data.datasets[0].backgroundColor = color;
-  stock6.data.datasets[0].borderColor = color;
-  stock6.data.labels = xValues;
-  stock6.scales.y.ticks.min = Math.min.apply(null, stockData[5]);
-  stock6.scales.y.ticks.max = Math.max.apply(null, stockData[5]);
-  stock6.update();
-  stock6Price.textContent = "$" + stockData[5].cost;
-  trade6.style.backgroundColor = color;
-  buy6.style.backgroundColor = color;
-  sell6.style.backgroundColor = color; 
-
-  //Fund 1
-  if(marketFunds[0].data[marketFunds[0].data.length -1] < marketFunds[0].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund1.data.datasets[0].data = marketFunds[0].data;
-  fund1.data.datasets[0].backgroundColor = color;
-  fund1.data.datasets[0].borderColor = color;
-  fund1.data.labels = xValues;
-  fund1.scales.y.ticks.min = Math.min.apply(null, marketFunds[0]);
-  fund1.scales.y.ticks.max = Math.max.apply(null, marketFunds[0]);
-  fund1.update();
-  fund1Price.textContent = "$" + marketFunds[0].cost;
-  tradef1.style.backgroundColor = color;
-  buyf1.style.backgroundColor = color;
-  sellf1.style.backgroundColor = color; 
-
-  //Fund 2
-  if(marketFunds[1].data[marketFunds[1].data.length -1] < marketFunds[1].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund2.data.datasets[0].data = marketFunds[1].data;
-  fund2.data.datasets[0].backgroundColor = color;
-  fund2.data.datasets[0].borderColor = color;
-  fund2.data.labels = xValues;
-  fund2.scales.y.ticks.min = Math.min.apply(null, marketFunds[1]);
-  fund2.scales.y.ticks.max = Math.max.apply(null, marketFunds[1]);
-  fund2.update();
-  fund2Price.textContent = "$" + marketFunds[1].cost;
-  tradef2.style.backgroundColor = color;
-  buyf2.style.backgroundColor = color;
-  sellf2.style.backgroundColor = color; 
-
-  //Fund 3
-  if(marketFunds[2].data[marketFunds[2].data.length -1] < marketFunds[2].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund3.data.datasets[0].data = marketFunds[2].data;
-  fund3.data.datasets[0].backgroundColor = color;
-  fund3.data.datasets[0].borderColor = color;
-  fund3.data.labels = xValues;
-  fund3.scales.y.ticks.min = Math.min.apply(null, marketFunds[2]);
-  fund3.scales.y.ticks.max = Math.max.apply(null, marketFunds[2]);
-  fund3.update();
-  fund3Price.textContent = "$" + marketFunds[2].cost;
-  tradef3.style.backgroundColor = color;
-  buyf3.style.backgroundColor = color;
-  sellf3.style.backgroundColor = color; 
-
-  //Fund 4
-  if(marketFunds[3].data[marketFunds[3].data.length -1] < marketFunds[3].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund4.data.datasets[0].data = marketFunds[3].data;
-  fund4.data.datasets[0].backgroundColor = color;
-  fund4.data.datasets[0].borderColor = color;
-  fund4.data.labels = xValues;
-  fund4.scales.y.ticks.min = Math.min.apply(null, marketFunds[3]);
-  fund4.scales.y.ticks.max = Math.max.apply(null, marketFunds[3]);
-  fund4.update();
-  fund4Price.textContent = "$" + marketFunds[3].cost;
-  tradef4.style.backgroundColor = color;
-  buyf4.style.backgroundColor = color;
-  sellf4.style.backgroundColor = color; 
-
-  //Fund 5
-  if(marketFunds[4].data[marketFunds[4].data.length -1] < marketFunds[4].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund5.data.datasets[0].data = marketFunds[4].data;
-  fund5.data.datasets[0].backgroundColor = color;
-  fund5.data.datasets[0].borderColor = color;
-  fund5.data.labels = xValues;
-  fund5.scales.y.ticks.min = Math.min.apply(null, marketFunds[4]);
-  fund5.scales.y.ticks.max = Math.max.apply(null, marketFunds[4]);
-  fund5.update();
-  fund5Price.textContent = "$" + marketFunds[4].cost;
-  tradef5.style.backgroundColor = color;
-  buyf5.style.backgroundColor = color;
-  sellf5.style.backgroundColor = color; 
-
-  //Fund 6
-  if(marketFunds[5].data[marketFunds[5].data.length -1] < marketFunds[5].data[0]){
-    color = "rgb(255, 80, 0)";
-  }else{
-    color = "rgb(0, 200, 5)";
-  }
-  fund6.data.datasets[0].data = marketFunds[5].data;
-  fund6.data.datasets[0].backgroundColor = color;
-  fund6.data.datasets[0].borderColor = color;
-  fund6.data.labels = xValues;
-  fund6.scales.y.ticks.min = Math.min.apply(null, marketFunds[5]);
-  fund6.scales.y.ticks.max = Math.max.apply(null, marketFunds[5]);
-  fund6.update();
-  fund6Price.textContent = "$" + marketFunds[5].cost;
-  tradef6.style.backgroundColor = color;
-  buyf6.style.backgroundColor = color;
-  sellf6.style.backgroundColor = color; 
-
-  period++;
-  if(period == year.length - 1){
-    nextPeriod.innerHTML = "End Game";
-  }
-}
-
-function updatePieCharts(){
-  let legendStockNames = [];
-  let secondPieData = [];
-  for(let i = 0; i < 12; i++){
-    if(i < 6 && stockData[i].owned > 0){
-      legendStockNames.push(stockData[i].name);
-      secondPieData.push(stockData[i].owned * stockData[i].cost);
-    }else if(i >= 6 && marketFunds[i%6].owned > 0){
-      legendStockNames.push(marketFunds[i%6].name);
-      secondPieData.push(marketFunds[i%6].owned * marketFunds[i%6].cost);
-    }
-  }
-  secondPie.data.labels = legendStockNames;
-  secondPie.data.datasets[0].data = secondPieData;
-  if(secondPie.data.datasets[0].data.length > 0){
-    secondPie.options.plugins.title.display = true;
-  }
-  secondPie.update();
-  updateEarnings(false);
-  firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
-  firstPie.update();
-  stock1Owned.textContent = stockData[0].owned + " shares";
-  stock2Owned.textContent = stockData[1].owned + " shares";
-  stock3Owned.textContent = stockData[2].owned + " shares";
-  stock4Owned.textContent = stockData[3].owned + " shares";
-  stock5Owned.textContent = stockData[4].owned + " shares";
-  stock6Owned.textContent = stockData[5].owned + " shares";
-
-  fund1Owned.textContent = marketFunds[0].owned + " shares";
-  fund2Owned.textContent = marketFunds[1].owned + " shares";
-  fund3Owned.textContent = marketFunds[2].owned + " shares";
-  fund4Owned.textContent = marketFunds[3].owned + " shares";
-  fund5Owned.textContent = marketFunds[4].owned + " shares";
-  fund6Owned.textContent = marketFunds[5].owned + " shares";
-}
