@@ -4,7 +4,7 @@ numStocksInvested = new Set();
 numFundsInvested = new Set();
 numBondsInvested = new Set();
 
-const stockData = [
+let stockData = [
   { 
     name: 'BioPharm Corp.',
     symbol: 'BPC',
@@ -60,7 +60,8 @@ const stockData = [
     owned: 0
   }
 ];  
-const marketFunds = [
+
+let marketFunds = [
   {
     name: "Tech Innovators Fund",
     industry: "Technology",
@@ -117,7 +118,7 @@ const marketFunds = [
   },
 ];
 
-const bonds = [
+let bonds = [
   {
     name: "Tech Innovators Corp Bond",
     industry: "Technology",
@@ -135,6 +136,10 @@ const bonds = [
     owned: 0
   },
 ];
+
+const tempStockData = JSON.parse(JSON.stringify(stockData));
+const tempMarketFunds = JSON.parse(JSON.stringify(marketFunds));
+const tempBonds = JSON.parse(JSON.stringify(bonds));
 
 const stockNews = [
   { company: 'BioPharm Corp.', news: 'Breakthrough in biotechnology leads to a surge in revenue.', sentiment: 'positive' },
@@ -192,7 +197,7 @@ const stockNews = [
   { company: 'EcoFoods Group', news: 'Faces backlash over a supply chain scandal, prompting a review of sourcing practices.', sentiment: 'negative' },
 ];
 
-const usedStockStories = Array.from({ length: stockNews.length }, () => false);
+let usedStockStories = Array.from({ length: stockNews.length }, () => false);
 
 const industryNewsWithBondEffect = [
   { industry: "Technology", news: "Cybersecurity legislation enhances data protection, boosting tech sector confidence.", sentiment: "positive", affectsBondPrice: "neutral" },
@@ -236,7 +241,7 @@ const industryNewsWithBondEffect = [
   { industry: "ESG", news: "Companies accused of greenwashing face legal repercussions, negatively affecting ESG investments.", sentiment: "negative", affectsBondPrice: null },
 ];
 
-const usedIndustryStories = Array.from({ length: industryNewsWithBondEffect.length }, () => false);
+let usedIndustryStories = Array.from({ length: industryNewsWithBondEffect.length }, () => false);
 
 function changeStock(name, sentiment, maxAmount) {
 for (let i = 0; i < stockData.length; i++) {
@@ -564,7 +569,27 @@ function toggleVisibility(element) {
   }, 250);
 }
 
+function resetGame(){
+  period = 0;
+  usedStockStories = Array.from({ length: stockNews.length }, () => false);
+  usedIndustryStories = Array.from({ length: industryNewsWithBondEffect.length }, () => false);
+  cash = 100000;
+  earnings = [];
+  stocksOwned = 0;
+  marketFundsOwned = 0;
+  bondsOwned = 0;
+  listofNews = [];
+  stockData = tempStockData;
+  marketFunds = tempMarketFunds;
+  bonds = tempBonds;
+  nextPeriod.textContent = "Next Period";
+  mainChart.data.labels.length = 0;
+  run();
+  nextPeriod.click();
+}
+
 const start = document.getElementById("start");
+const restart = document.getElementById("restart");
 const startWindow = document.getElementById("startWindow");
 const gameWindow = document.getElementById("gameWindow");
 const endWindow = document.getElementById("endWindow");
@@ -683,6 +708,14 @@ start.addEventListener('click', function(){
   gameWindow.classList.add("d-block");
   nextPeriod.classList.remove("d-none");
   nextPeriod.classList.add("d-block");
+});
+
+restart.addEventListener('click', function(){
+  endWindow.classList.add("d-none");
+  endWindow.classList.remove("d-block");
+  startWindow.classList.remove("d-none");
+  startWindow.classList.add("d-block");
+  resetGame();
 });
 
 selectStock.addEventListener('mouseover', function(){
@@ -939,7 +972,7 @@ function updatePerformances(){
     change.textContent = "- $" + Math.abs((earnings[earnings.length -1] - earnings[0])).toLocaleString();
   }
   change.style.color = color;
-  xValues = mainChart.data.labels.concat(Array.from({ length: 12 }, (_, index) => ((index + 1) % 12) + 1).map((month, index) => `${month}/${year[period]}`));
+  xValues = mainChart.data.labels.concat(Array.from({ length: 12 }, (_, index) => ((index) % 12) + 1).map((month, index) => `${month}/${year[period]}`));
   mainChart.data.datasets[0].data = earnings;
   mainChart.data.datasets[0].backgroundColor = color;
   mainChart.data.datasets[0].borderColor = color;
@@ -1188,6 +1221,8 @@ function updatePieCharts(){
   secondPie.data.datasets[0].data = secondPieData;
   if(secondPie.data.datasets[0].data.length > 0){
     secondPie.options.plugins.title.display = true;
+  }else{
+    secondPie.options.plugins.title.display = false;
   }
   secondPie.update();
   updateEarnings(false);
@@ -2380,7 +2415,6 @@ nextPeriod.addEventListener('click', function() {
   results();
   updatePerformances();
   updatePieCharts();
-  console.log(period);
   if(period == year.length){
     gameWindow.classList.add("d-none");
     gameWindow.classList.remove("d-block");
@@ -2408,7 +2442,6 @@ nextPeriod.addEventListener('click', function() {
   }
   // localStorage.setItem("earnings", JSON.stringify(earnings));
   // localStorage.setItem("cash", JSON.stringify(cash));
-  // localStorage.setItem("earnings", JSON.stringify(earnings));
   // localStorage.setItem("cash", JSON.stringify(stocksOwned));
   // localStorage.setItem("earnings", JSON.stringify(marketFundsOwned));
   // localStorage.setItem("cash", JSON.stringify(stockData));
