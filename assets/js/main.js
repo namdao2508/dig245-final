@@ -617,6 +617,7 @@ const selectBond = document.getElementById("selectBond");
 const stockSection = document.getElementById("stockSection");
 const fundSection = document.getElementById("fundSection");
 const bondSection = document.getElementById("bondSection");
+const gameMoves = document.getElementById("gameMoves");
 
 const stock1Symbol = document.getElementById("stock1Symbol");
 const stock1Owned = document.getElementById("stock1Owned");
@@ -709,6 +710,10 @@ start.addEventListener('click', function(){
   gameWindow.classList.add("d-block");
   nextPeriod.classList.remove("d-none");
   nextPeriod.classList.add("d-block");
+  if(gameMoves.classList.contains("d-none")){
+    gameMoves.classList.add("d-block");
+    gameMoves.classList.remove("d-none");
+  }
 });
 
 restart.addEventListener('click', function(){
@@ -1199,7 +1204,7 @@ function updatePerformances(){
   sellf6.style.backgroundColor = color; 
 
   period++;
-  if(period == year.length - 1){
+  if(period == year.length){
     nextPeriod.innerHTML = "End Game";
   }
 }
@@ -2440,6 +2445,9 @@ nextPeriod.addEventListener('click', function() {
   updatePerformances();
   updatePieCharts();
   if(period == year.length){
+    gameMoves.classList.add("d-none");
+    gameMoves.classList.remove("d-block");
+  }else if(period == year.length + 1){
     gameWindow.classList.add("d-none");
     gameWindow.classList.remove("d-block");
     endWindow.classList.remove("d-none");
