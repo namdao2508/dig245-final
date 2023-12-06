@@ -84,8 +84,15 @@ border-radius: 8px;
 margin-top: 2%;
 }
 
+#orderCost{
+    margin-bottom: 8%;
+}
+
 #modalRange {
 width: 100%;
+margin-bottom: 2%;
+padding-left: 2%;
+padding-right: 2%;
 }
 
 #close{

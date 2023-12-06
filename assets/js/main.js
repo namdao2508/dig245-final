@@ -558,7 +558,6 @@ function bondsOperations(){
 
 function toggleVisibility(element) {
   setTimeout(() => {
-    // Code to execute after the specified delay
     if (element.classList.contains("d-none")) {
       element.classList.remove("d-none");
       element.classList.add("d-block");
@@ -609,6 +608,8 @@ const rangeData = document.getElementById("modalRange");
 const modal = document.getElementById("myModal");
 const currentValueSpan = document.getElementById('currentValue');
 const closeModal = document.getElementById("close");
+const orderCost = document.getElementById("orderCost");
+const availableToBuy = document.getElementById("availableToBuy");
 const execute = document.getElementById("execute");
 const selectStock = document.getElementById("selectStock");
 const selectFund = document.getElementById("selectFund");
@@ -1242,14 +1243,34 @@ function updatePieCharts(){
   fund5Owned.textContent = marketFunds[4].owned + " shares";
   fund6Owned.textContent = marketFunds[5].owned + " shares";
 }
-  
+
 rangeData.addEventListener('input', function() {
   currentValueSpan.textContent = this.value + " shares";
   what[2] = Number(rangeData.value);
+  let temp;
+  if(stockData.some(obj => obj.name === what[0])){
+    temp = findStockByName(what[0]);
+    orderCost.textContent = "$" + this.value * temp.cost;
+  }else if(marketFunds.some(obj => obj.industry === what[0])){
+    temp = findMarketFundsByIndustry(what[0]);
+    orderCost.textContent = "$" + this.value * temp.cost;
+  }else{
+    bondsOperations();
+  }
 });
+
+closeModal.addEventListener('mouseover', function(){
+  closeModal.style.opacity = 0.5;
+})
+
+closeModal.addEventListener('mouseout', function(){
+  closeModal.style.opacity = 1;
+})
 
 closeModal.addEventListener('click', function(){
   currentValueSpan.textContent = "0 shares";
+  orderCost.textContent = "$0";
+  what[1].click();
 });
 
 execute.addEventListener('click', function(){
@@ -1262,6 +1283,8 @@ execute.addEventListener('click', function(){
   }
   updatePieCharts();
   currentValueSpan.textContent = "0 shares";
+  orderCost.textContent = "$0";
+  rangeData.value = 0;
   what[1].click();
 });
 
@@ -1292,15 +1315,15 @@ buy1.addEventListener('click', function() {
   what[0] = stockData[0].name;
   what[3] = true;
   what[1] = trade1;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
+  rangeData.max = Math.floor(cash/stockData[0].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[0].symbol + ".";
 })
 sell1.addEventListener('click', function(){
   what[0] = stockData[0].name;
   what[3] = false;
   what[1] = trade1;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = stockData[0].owned;
+  availableToBuy.textContent = "$" + stockData[0].owned * stockData[0].cost + " " + stockData[0].symbol + " available";
 });
 trade1.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1389,15 +1412,17 @@ buy2.addEventListener('click', function() {
   what[0] = stockData[1].name;
   what[3] = true;
   what[1] = trade2;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
+  rangeData.max = Math.floor(cash/stockData[1].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[1].symbol + ".";
 })
 sell2.addEventListener('click', function(){
   what[0] = stockData[1].name;
   what[3] = false;
   what[1] = trade2;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = Math.floor(cash/stockData[1].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[1].symbol + ".";
+  rangeData.max = stockData[1].owned;
+  availableToBuy.textContent = "$" + stockData[1].owned * stockData[1].cost + " " + stockData[1].symbol + " available";
 });
 trade2.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1486,15 +1511,15 @@ buy3.addEventListener('click', function() {
   what[0] = stockData[2].name;
   what[3] = true;
   what[1] = trade3;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
+  rangeData.max = Math.floor(cash/stockData[2].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[2].symbol + ".";
 })
 sell3.addEventListener('click', function(){
   what[0] = stockData[2].name;
   what[3] = false;
   what[1] = trade3;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = stockData[2].owned;
+  availableToBuy.textContent = "$" + stockData[2].owned * stockData[2].cost + " " + stockData[2].symbol + " available";
 });
 trade3.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1583,15 +1608,15 @@ buy4.addEventListener('click', function() {
   what[0] = stockData[3].name;
   what[3] = true;
   what[1] = trade4;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
+  rangeData.max = Math.floor(cash/stockData[3].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[3].symbol + ".";
 })
 sell4.addEventListener('click', function(){
   what[0] = stockData[3].name;
   what[3] = false;
   what[1] = trade4;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = stockData[3].owned;
+  availableToBuy.textContent = "$" + stockData[3].owned * stockData[3].cost + " " + stockData[3].symbol + " available";
 });
 trade4.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1680,15 +1705,15 @@ buy5.addEventListener('click', function() {
   what[0] = stockData[4].name;
   what[3] = true;
   what[1] = trade5;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/stockData[4].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[4].symbol + ".";
+});
 sell5.addEventListener('click', function(){
   what[0] = stockData[4].name;
   what[3] = false;
   what[1] = trade5;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = stockData[4].owned;
+  availableToBuy.textContent = "$" + stockData[4].owned * stockData[4].cost + " " + stockData[4].symbol + " available";
 });
 trade5.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1777,15 +1802,15 @@ buy6.addEventListener('click', function() {
   what[0] = stockData[5].name;
   what[3] = true;
   what[1] = trade6;
-  rangeData.max = Math.floor(cash/findStockByName(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/stockData[5].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + stockData[5].symbol + ".";
+});
 sell6.addEventListener('click', function(){
   what[0] = stockData[5].name;
   what[3] = false;
   what[1] = trade6;
-  rangeData.max = findStockByName(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = stockData[5].owned;
+  availableToBuy.textContent = "$" + stockData[5].owned * stockData[5].cost + " " + stockData[5].symbol + " available";
 });
 trade6.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1871,15 +1896,15 @@ buyf1.addEventListener('click', function() {
   what[0] = marketFunds[0].industry;
   what[3] = true;
   what[1] = tradef1;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/marketFunds[0].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[0].symbol + ".";
+});
 sellf1.addEventListener('click', function(){
   what[0] = marketFunds[0].industry;
   what[3] = false;
   what[1] = tradef1;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = marketFunds[0].owned;
+  availableToBuy.textContent = "$" + marketFunds[0].owned * marketFunds[0].cost + " " + marketFunds[0].symbol + " available";
 });
 tradef1.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -1965,15 +1990,15 @@ buyf2.addEventListener('click', function() {
   what[0] = marketFunds[1].industry;
   what[3] = true;
   what[1] = tradef2;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/marketFunds[1].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[1].symbol + ".";
+});
 sellf2.addEventListener('click', function(){
   what[0] = marketFunds[1].industry;
   what[3] = false;
   what[1] = tradef2;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = marketFunds[1].owned;
+  availableToBuy.textContent = "$" + marketFunds[1].owned * marketFunds[1].cost + " " + marketFunds[1].symbol + " available";
 });
 tradef2.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -2059,16 +2084,15 @@ buyf3.addEventListener('click', function() {
   what[0] = marketFunds[2].industry;
   what[3] = true;
   what[1] = tradef3;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
+  rangeData.max = Math.floor(cash/marketFunds[2].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[2].symbol + ".";
 })
 sellf3.addEventListener('click', function(){
   what[0] = marketFunds[2].industry;
   what[3] = false;
   what[1] = tradef3;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
-});
+  rangeData.max = marketFunds[2].owned;
+  availableToBuy.textContent = "$" + marketFunds[2].owned * marketFunds[2].cost + " " + marketFunds[2].symbol + " available";});
 tradef3.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
   toggleVisibility(buyf3);
@@ -2153,15 +2177,15 @@ buyf4.addEventListener('click', function() {
   what[0] = marketFunds[3].industry;
   what[3] = true;
   what[1] = tradef4;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/marketFunds[3].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[3].symbol + ".";
+});
 sellf4.addEventListener('click', function(){
   what[0] = marketFunds[3].industry;
   what[3] = false;
   what[1] = tradef4;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = marketFunds[3].owned;
+  availableToBuy.textContent = "$" + marketFunds[3].owned * marketFunds[3].cost + " " + marketFunds[3].symbol + " available";
 });
 tradef4.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -2247,15 +2271,15 @@ buyf5.addEventListener('click', function() {
   what[0] = marketFunds[4].industry;
   what[3] = true;
   what[1] = tradef5;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/marketFunds[4].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[4].symbol + ".";
+});
 sellf5.addEventListener('click', function(){
   what[0] = marketFunds[4].industry;
   what[3] = false;
   what[1] = tradef5;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = marketFunds[4].owned;
+  availableToBuy.textContent = "$" + marketFunds[4].owned * marketFunds[4].cost + " " + marketFunds[4].symbol + " available";
 });
 tradef5.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
@@ -2341,15 +2365,15 @@ buyf6.addEventListener('click', function() {
   what[0] = marketFunds[5].industry;
   what[3] = true;
   what[1] = tradef6;
-  rangeData.max = Math.floor(cash/findMarketFundsByIndustry(what[0]).cost);
-  rangeData.value = rangeData.max / 2;
-})
+  rangeData.max = Math.floor(cash/marketFunds[5].cost);
+  availableToBuy.textContent = "$" + cash + " available to buy " + marketFunds[5].symbol + ".";
+});
 sellf6.addEventListener('click', function(){
   what[0] = marketFunds[5].industry;
   what[3] = false;
   what[1] = tradef6;
-  rangeData.max = findMarketFundsByIndustry(what[0]).owned;
-  rangeData.value = Math.floor(rangeData.max / 2);
+  rangeData.max = marketFunds[5].owned;
+  availableToBuy.textContent = "$" + marketFunds[5].owned * marketFunds[5].cost + " " + marketFunds[5].symbol + " available";
 });
 tradef6.addEventListener("click", function() {
   // Toggle the display property of the Buy and Sell buttons
