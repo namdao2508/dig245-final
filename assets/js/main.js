@@ -2454,8 +2454,8 @@ nextPeriod.addEventListener('click', function() {
     endWindow.classList.add("d-block");
     nextPeriod.classList.remove("d-block");
     nextPeriod.classList.add("d-none");
-    gameResults1.textContent = "Your porfolio in 2030 is now at $" + earnings[earnings.length - 1].toFixed(2);
-    let percentageChange = 100 * ((earnings[earnings.length - 1] - earnings[0])/earnings[0] )
+    gameResults1.textContent = "Your porfolio in 2030 is now at $" + earnings[earnings.length - 1];
+    let percentageChange = 100 * ((earnings[earnings.length - 1] - earnings[0])/earnings[0]).toFixed(2);
     if(earnings[earnings.length - 1] < earnings[0]){
       gameResults2.textContent = "This is at a loss of " + percentageChange + "%";
     }else{
