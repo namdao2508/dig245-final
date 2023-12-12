@@ -588,6 +588,12 @@ function resetGame(){
 }
 
 const start = document.getElementById("start");
+const instruction1 = document.getElementById("instruction1");
+const instruction2 = document.getElementById("instruction2");
+const instruction3 = document.getElementById("instruction3");
+const instruction4 = document.getElementById("instruction4");
+const ready = document.getElementById("Ready?");
+
 const restart = document.getElementById("restart");
 const startWindow = document.getElementById("startWindow");
 const gameWindow = document.getElementById("gameWindow");
@@ -704,15 +710,28 @@ const descriptf6 = document.getElementById("descriptf6");
 const DFund6 = document.getElementById("DFund6");
 
 start.addEventListener('click', function(){
-  startWindow.classList.add("d-none");
-  startWindow.classList.remove("d-block");
-  gameWindow.classList.remove("d-none");
-  gameWindow.classList.add("d-block");
-  nextPeriod.classList.remove("d-none");
-  nextPeriod.classList.add("d-block");
-  if(gameMoves.classList.contains("d-none")){
-    gameMoves.classList.add("d-block");
-    gameMoves.classList.remove("d-none");
+  if(instruction4.classList.contains("d-block")){
+    startWindow.classList.add("d-none");
+    startWindow.classList.remove("d-block");
+    gameWindow.classList.remove("d-none");
+    gameWindow.classList.add("d-block");
+    nextPeriod.classList.remove("d-none");
+    nextPeriod.classList.add("d-block");
+    if(gameMoves.classList.contains("d-none")){
+      gameMoves.classList.add("d-block");
+      gameMoves.classList.remove("d-none");
+    }
+  }else if(instruction3.classList.contains("d-block")){
+    start.textContent = "Start";
+    ready.textContent = "Are You Ready? Goodluck!";
+    toggleVisibility(instruction3);
+    toggleVisibility(instruction4);
+  }else if(instruction1.classList.contains("d-block")){
+    toggleVisibility(instruction1);
+    toggleVisibility(instruction2);
+  }else{
+    toggleVisibility(instruction2);
+    toggleVisibility(instruction3);
   }
 });
 
