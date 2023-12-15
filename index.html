@@ -20,7 +20,7 @@
             </div>
             <div class="col-6 col-md-8"></div>
             <div class="col-1">
-                <button type="button" class="btn text-white spaceOut a d-none" id="nextPeriod">Next Period</button>
+                <button type="button" class="btn text-white spaceOut a d-block" id="nextPeriod">Next Period</button>
             </div>
             <div class="col-1 col-md-1"></div>
         </div>
@@ -38,8 +38,8 @@
                     <p class="d-block" id="instruction1">Welcome to our investment management game—an immersive experience designed to 
                         empower players with the knowledge and skills to master the art of portfolio 
                         management. As the player, you'll embark on a financial journey with a starting 
-                        capital of $100,000. This virtual fortune allows you to explore and invest in three 
-                        key asset classes: Stocks, Exchange Traded Funds (ETFs), and Bonds.
+                        capital of $100,000. This virtual fortune allows you to explore and invest in two 
+                        key asset classes: Stocks and Exchange Traded Funds (ETFs).
                     </p>
                     <p class="d-none" id="instruction2">
                         Hover over the investment names to unveil detailed descriptions of each company, 
@@ -101,7 +101,7 @@
         </div>
 
         <!-- Game Window -->
-        <div class="d-none" id="gameWindow">
+        <div class="d-block" id="gameWindow">
             <div class="row justify-content-center text-start">
                 <div class="col-10">
                     <h3 class = "topHeader" id="Portfolio">$ 100,000</h3>
@@ -152,7 +152,7 @@
                     <h5 id="selectFund">ETFs</h5>
                 </div>
                 <div class="col-3 col-md-1 text-end">
-                    <h5 id="selectBond">Bonds</h5>
+                    <h5 id="selectFAQ">FAQ</h5>
                 </div>
             </div>
 
@@ -269,7 +269,7 @@
             </div>
 
             <!-- Fund Section -->
-            <div class="d-none" id="fundSection">
+            <div class="d-block" id="fundSection">
                 <div class="row justify-content-center align-items-center spaceOut">
                     <div class="col-3 col-md-1">
                         <h5 id="fund1Symbol"></h5>
@@ -378,50 +378,63 @@
                         <button type="button" class="btn text-white d-none spaceOut" id="sellf6" onclick="toggleVisibility(myModal)">Sell</button>
                     </div>
                 </div>
-            </div>
+            </div>       
             
-            <!-- Fund Section -->
-            <div class="d-none" id="bondSection">
-                <div class="row justify-content-evenly align-items-center spaceOut">
-                    <div class="col-3 col-md-1">
-                        <h5 id="bond1Symbol"></h5>
-                        <h5 id="bond1Price"></h5>
-                        <h6 id="bond1Owned"></h6>
-                    </div>
-                    <div class="col-5 col-md-7 d-block" id="togglef6">
-                        <canvas id="bond1" style="width:100%; max-height: 100px;"></canvas>
-                    </div>
-                    <div class="col-5 col-md-7 d-none" id="descriptf6">
-                        <h5 id="DBond1"></h5>
-                    </div>
-                    <div class="col-3 col-md-1">
-                        <button type="button" class="btn text-white spaceOut" id="tradeb1">Trade</button>
-                        <button type="button" class="btn text-white d-none spaceOut" id="buyb1" onclick="toggleVisibility(myModal)">Buy</button>
-                        <button type="button" class="btn text-white d-none spaceOut" id="sellb1" onclick="toggleVisibility(myModal)">Sell</button>
+            <!-- FAQ -->
+            <div class="d-block" id="faqSection">
+                <div class="row justify-content-center align-items-center spaceOut">
+                    <h4 class="col-10" id="Q1">
+                        How do I invest?
+                    </h4>
+                    <div class="col-7 d-block" id="A1">
+                        Start by reading the news catalog which will provide you with key information
+                        about the projections of certain stocks and ETFs. Then you can click on the 
+                        trade button of the stock/ETF of your choice to either buy or sell the equity. 
                     </div>
                 </div>
-                <div class="row justify-content-evenly align-items-center spaceOut">
-                    <div class="col-3 col-md-1">
-                        <h5 id="bond2Symbol"></h5>
-                        <h5 id="bond2Price"></h5>
-                        <h6 id="bond2Owned"></h6>
+                <div class="row justify-content-center align-items-center spaceOut">
+                    <h4 class="col-10" id="Q2">
+                        What are stocks?
+                    </h4>
+                    <div class="col-7 d-block" id="A2">
+                        Stocks, often referred to as shares or equity, represent ownership in a company. 
+                        When you buy a stock, you become a shareholder, owning a small part of that company. 
+                        The value of stocks fluctuates based on the company's performance and market conditions. 
+                        If the company does well, the value of your stocks may increase. Alternative, if the company
+                        does poorly, the value of your stocks may decrease. Investing in stocks comes with risks, 
+                        but it also offers the opportunity for significant financial gains. 
                     </div>
-                    <div class="col-5 col-md-7 d-block" id="togglef6">
-                        <canvas id="bond2" style="width:100%; max-height: 100px;"></canvas>
+                </div>
+                <div class="row justify-content-center align-items-center spaceOut">
+                    <h4 class="col-10" id="Q3">
+                        What are Exchange Traded Funds (ETFs)?
+                    </h4>
+                    <div class="col-7 d-block" id="A3">
+                        Exchange-Traded Funds (ETFs) are investment funds that are traded on stock exchanges, 
+                        much like individual stocks. An ETF holds assets such as stocks, bonds, or commodities, 
+                        and it typically tracks an index, a sector, a commodity, or other assets. One of the main 
+                        advantages of ETFs is that they offer diversification. Since an ETF can hold hundreds or 
+                        thousands of stocks across various industries, or it can be focused on a specific sector 
+                        or asset class, it allows investors to reduce the risk that comes with investing in individual 
+                        stocks. This makes them an attractive option for both beginner and experienced investors 
+                        looking to build a diversified portfolio.
                     </div>
-                    <div class="col-5 col-md-7 d-none" id="descriptf6">
-                        <h5 id="DBond2"></h5>
-                    </div>
-                    <div class="col-3 col-md-1">
-                        <button type="button" class="btn text-white spaceOut" id="tradeb2">Trade</button>
-                        <button type="button" class="btn text-white d-none spaceOut" id="buyb2" onclick="toggleVisibility(myModal)">Buy</button>
-                        <button type="button" class="btn text-white d-none spaceOut" id="sellb2" onclick="toggleVisibility(myModal)">Sell</button>
+                </div>
+                <div class="row justify-content-center align-items-center spaceOut">
+                    <h4 class="col-10" id="Q4">
+                        How do I identify possible catalysts?
+                    </h4>
+                    <div class="col-7 d-block" id="A4">
+                        Identifying possible catalysts in the context of investments means spotting events or 
+                        developments that could significantly impact the price of a stock, a sector, or the market 
+                        as a whole. Here are some key strategies to identify such catalysts: Earnings Reports, Economic 
+                        Indicators, Industry Developments, Mergers and Acquisitions, Geopoliticial Events, Company-Specific 
+                        News, Market Sentiment, Technological Breakthroughs, etc...
                     </div>
                 </div>
             </div>
-        </div>
-                
-        <!-- Modal -->
+
+            <!-- Modal -->
             <div id="myModal" class="modal-background container-fluid d-none">
                 <div class="row modal-content">
                 <div class="col-12 text-end">
@@ -441,6 +454,7 @@
                     <button type="button" id="execute" class="btn text-white" onclick="toggleVisibility(myModal)">Execute Order</button>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 

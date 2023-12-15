@@ -2,7 +2,6 @@ let period = 0;
 let year = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 numStocksInvested = new Set();
 numFundsInvested = new Set();
-numBondsInvested = new Set();
 
 let stockData = [
   { 
@@ -118,28 +117,8 @@ let marketFunds = [
   },
 ];
 
-let bonds = [
-  {
-    name: "Tech Innovators Corp Bond",
-    industry: "Technology",
-    cost: 1000,
-    interest: 0.05,
-    data: [],
-    owned: 0
-  },
-  {
-    name: "EcoSolutions Green Bond",
-    industry: "Energy/Oil",
-    cost: 1500,
-    interest: 0.03,
-    data: [],
-    owned: 0
-  },
-];
-
 const tempStockData = JSON.parse(JSON.stringify(stockData));
 const tempMarketFunds = JSON.parse(JSON.stringify(marketFunds));
-const tempBonds = JSON.parse(JSON.stringify(bonds));
 
 const stockNews = [
   { company: 'BioPharm Corp.', news: 'Breakthrough in biotechnology leads to a surge in revenue.', sentiment: 'positive' },
@@ -302,115 +281,72 @@ function changeIndustry(industry, sentiment, maxAmount, affectsBondPrice) {
       }
     }
   }
-
-  for (let i = 0; i < bonds.length; i++) {
-    if (bonds[i].industry === industry) {
-      if (sentiment === 'positive') {
-        const randomAmount = Math.floor(Math.random() * (bonds[i].cost * maxAmount)) + 1;
-        bonds[i].cost += randomAmount;
-
-        // Adjust bond price based on affectsBondPrice
-        adjustBondPrice(bonds[i], affectsBondPrice);
-        return;
-      } else if (sentiment === 'negative') {
-        const randomAmount = Math.floor(Math.random() * (bonds[i].cost * maxAmount)) + 1;
-        bonds[i].cost -= randomAmount;
-
-        // Adjust bond price based on affectsBondPrice
-        adjustBondPrice(bonds[i], affectsBondPrice);
-        return;
-      } else {
-        let fluctuate = Math.random();
-        const randomAmount = Math.floor(Math.random() * (bonds[i].cost * 0.15));
-
-        if (fluctuate < 0.7) {
-          bonds[i].cost += randomAmount;
-        } else {
-          bonds[i].cost -= randomAmount;
-        }
-
-        // Adjust bond price based on affectsBondPrice
-        adjustBondPrice(bonds[i], affectsBondPrice);
-        return;
-      }
-    }
-  }
-}
-
-function adjustBondPrice(bond, affectsBondPrice) {
-  // Adjust bond price based on affectsBondPrice
-  if (affectsBondPrice === 'positive') {
-    bond.cost *= 1.05; // Increase bond price by 5%
-  } else if (affectsBondPrice === 'negative') {
-    bond.cost *= 0.95; // Decrease bond price by 5%
-  }
 }
 
 let cash = 100000;
 let earnings = [];
 let stocksOwned = 0;
 let marketFundsOwned = 0;
-let bondsOwned = 0;
 let listofNews = [];
 
 function run(){
-    listofNews = [];
-    // This for loop will initialize the news where there can only exist 1 news story for one stock
-    // and one news story for an industry. 
-    for(let i = 0; i < 5; i++){
-        let index = Math.floor(Math.random() * stockNews.length);
-        if(i < 2){
-            if(i == 1 && stockNews[index].company != listofNews[i-1].company){
-                if(usedStockStories[index] == false){
-                    usedStockStories[i] = true;
-                    listofNews[i] = stockNews[index];
-                }else{
-                    i--;
-                }
-            }else if(i == 0){
-                if(usedStockStories[index] == false){
-                    usedStockStories[i] = true;
-                    listofNews[i] = stockNews[index];
-                }else{
-                    i--;
-                }
-            }else{
-                i--;
-            }
-        }else{
-            index = Math.floor(Math.random() * industryNewsWithBondEffect.length);
-            if(i == 4 && industryNewsWithBondEffect[index].industry != listofNews[i-1].industry 
-                && industryNewsWithBondEffect[index].industry != listofNews[i-2].industry){
-                if(usedIndustryStories[index] == false){
-                    usedIndustryStories[i] = true;
-                    listofNews[i] = industryNewsWithBondEffect[index];
-                }else{
-                    i--;
-                }
-            }else if(i == 3 && industryNewsWithBondEffect[index].industry != listofNews[i-1].industry){
-                if(usedIndustryStories[index] == false){
-                    usedIndustryStories[i] = true;
-                    listofNews[i] = industryNewsWithBondEffect[index];
-                }else{
-                    i--;
-                }
-            }else if(i == 2){
-                if(usedIndustryStories[index] == false){
-                    usedIndustryStories[i] = true;
-                    listofNews[i] = industryNewsWithBondEffect[index];
-                }else{
-                    i--;
-                }
-            }else{
-                i--;
-            }
-        }
+  listofNews = [];
+  // This for loop will initialize the news where there can only exist 1 news story for one stock
+  // and one news story for an industry. 
+  for(let i = 0; i < 5; i++){
+    let index = Math.floor(Math.random() * stockNews.length);
+    if(i < 2){
+      if(i == 1 && stockNews[index].company != listofNews[i-1].company){
+          if(usedStockStories[index] == false){
+              usedStockStories[i] = true;
+              listofNews[i] = stockNews[index];
+          }else{
+              i--;
+          }
+      }else if(i == 0){
+          if(usedStockStories[index] == false){
+              usedStockStories[i] = true;
+              listofNews[i] = stockNews[index];
+          }else{
+              i--;
+          }
+      }else{
+          i--;
+      }
+  }else{
+      index = Math.floor(Math.random() * industryNewsWithBondEffect.length);
+      if(i == 4 && industryNewsWithBondEffect[index].industry != listofNews[i-1].industry 
+          && industryNewsWithBondEffect[index].industry != listofNews[i-2].industry){
+          if(usedIndustryStories[index] == false){
+              usedIndustryStories[i] = true;
+              listofNews[i] = industryNewsWithBondEffect[index];
+          }else{
+              i--;
+          }
+      }else if(i == 3 && industryNewsWithBondEffect[index].industry != listofNews[i-1].industry){
+          if(usedIndustryStories[index] == false){
+              usedIndustryStories[i] = true;
+              listofNews[i] = industryNewsWithBondEffect[index];
+          }else{
+              i--;
+          }
+      }else if(i == 2){
+          if(usedIndustryStories[index] == false){
+              usedIndustryStories[i] = true;
+              listofNews[i] = industryNewsWithBondEffect[index];
+          }else{
+              i--;
+          }
+      }else{
+          i--;
+      }
     }
+  }
 }
 
 function results(){
   let a = 0;
-    // This for loop will change the price of the stock, mutual funds, or bonds affected by the news
+    // This for loop will change the price of the stock or mutual funds affected by the news
   for(let i = 0; i < listofNews.length; i++){
     if(i < 2){
       let c = findStockByName(listofNews[i].company);
@@ -485,16 +421,12 @@ function updateEarnings(changes){
   }else{
     stocksOwned = 0;
     marketFundsOwned = 0;
-    bondsOwned = 0;
     for(let i = 0; i < stockData.length; i++){
       if(stockData[i].owned > 0){
         stocksOwned += stockData[i].owned * stockData[i].cost;
       }
       if(marketFunds[i].owned > 0){
         marketFundsOwned += marketFunds[i].owned * marketFunds[i].cost;
-      }
-      if(i < 2 && bonds[i].owned){
-        bondsOwned = 0;
       }
     }
   }
@@ -552,10 +484,6 @@ function fundsOperations(marketFundName, numStocks, buy){
     }
 }
 
-function bondsOperations(){
-  return;
-}
-
 function toggleVisibility(element) {
   setTimeout(() => {
     if (element.classList.contains("d-none")) {
@@ -576,11 +504,9 @@ function resetGame(){
   earnings = [];
   stocksOwned = 0;
   marketFundsOwned = 0;
-  bondsOwned = 0;
   listofNews = [];
   stockData = tempStockData;
   marketFunds = tempMarketFunds;
-  bonds = tempBonds;
   nextPeriod.textContent = "Next Period";
   mainChart.data.labels.length = 0;
   run();
@@ -619,10 +545,10 @@ const availableToBuy = document.getElementById("availableToBuy");
 const execute = document.getElementById("execute");
 const selectStock = document.getElementById("selectStock");
 const selectFund = document.getElementById("selectFund");
-const selectBond = document.getElementById("selectBond");
+const selectFAQ = document.getElementById("selectFAQ");
 const stockSection = document.getElementById("stockSection");
 const fundSection = document.getElementById("fundSection");
-const bondSection = document.getElementById("bondSection");
+const faqSection = document.getElementById("faqSection");
 const gameMoves = document.getElementById("gameMoves");
 
 const stock1Symbol = document.getElementById("stock1Symbol");
@@ -709,7 +635,15 @@ const togglef6 = document.getElementById("togglef6");
 const descriptf6 = document.getElementById("descriptf6");
 const DFund6 = document.getElementById("DFund6");
 
+setTimeout(function() {
+  if(startWindow.classList.contains("d-block")){
+    gameWindow.classList.remove("d-block");
+    gameWindow.classList.add("d-none");
+  }
+}, 1);
+
 start.addEventListener('click', function(){
+  console.log("clicked")
   if(instruction4.classList.contains("d-block")){
     startWindow.classList.add("d-none");
     startWindow.classList.remove("d-block");
@@ -736,6 +670,10 @@ start.addEventListener('click', function(){
 });
 
 restart.addEventListener('click', function(){
+  toggleVisibility(instruction1);
+  toggleVisibility(instruction4);
+  start.textContent = "Next";
+  ready.textContent = "";
   endWindow.classList.add("d-none");
   endWindow.classList.remove("d-block");
   startWindow.classList.remove("d-none");
@@ -762,10 +700,10 @@ selectStock.addEventListener('click', function(){
     fundSection.classList.add("d-none");
     selectFund.style.color = "white";
   }
-  if(bondSection.classList.contains("d-block")){
-    bondSection.classList.remove("d-block");
-    bondSection.classList.add("d-none");
-    selectBond.style.color = "white";
+  if(faqSection.classList.contains("d-block")){
+    faqSection.classList.remove("d-block");
+    faqSection.classList.add("d-none");
+    selectFAQ.style.color = "white";
   }
 })
 
@@ -788,26 +726,26 @@ selectFund.addEventListener('click', function(){
     stockSection.classList.add("d-none");
     selectStock.style.color = "white";
   }
-  if(bondSection.classList.contains("d-block")){
-    bondSection.classList.remove("d-block");
-    bondSection.classList.add("d-none");
-    selectBond.style.color = "white";
+  if(faqSection.classList.contains("d-block")){
+    faqSection.classList.remove("d-block");
+    faqSection.classList.add("d-none");
+    selectFAQ.style.color = "white";
   }
 })
 
-selectBond.addEventListener('mouseover', function(){
-  selectBond.style.opacity = 0.5;
+selectFAQ.addEventListener('mouseover', function(){
+  selectFAQ.style.opacity = 0.5;
 })
 
-selectBond.addEventListener('mouseout', function(){
-  selectBond.style.opacity = 1;
+selectFAQ.addEventListener('mouseout', function(){
+  selectFAQ.style.opacity = 1;
 })
 
-selectBond.addEventListener('click', function(){
-  if(bondSection.classList.contains("d-none")){
-    bondSection.classList.remove("d-none");
-    bondSection.classList.add("d-block");
-    selectBond.style.color = "rgb(0, 200, 5)";
+selectFAQ.addEventListener('click', function(){
+  if(faqSection.classList.contains("d-none")){
+    faqSection.classList.remove("d-none");
+    faqSection.classList.add("d-block");
+    selectFAQ.style.color = "rgb(0, 200, 5)";
   }
   if(stockSection.classList.contains("d-block")){
     stockSection.classList.remove("d-block");
@@ -911,10 +849,10 @@ var barColors = [
 let firstPie = new Chart("portfolio", {
   type: "doughnut",
   data: {
-    labels: ["Cash", "Stocks", "Mutual Funds", "Bonds"],
+    labels: ["Cash", "Stocks", "Mutual Funds"],
     datasets: [{
       backgroundColor: barColors,
-      data: [cash, stocksOwned, marketFundsOwned, bondsOwned]
+      data: [cash, stocksOwned, marketFundsOwned]
     }]
   },
   options: {
@@ -1251,7 +1189,7 @@ function updatePieCharts(){
   }
   secondPie.update();
   updateEarnings(false);
-  firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned, bondsOwned];
+  firstPie.data.datasets[0].data = [cash, stocksOwned, marketFundsOwned];
   firstPie.update();
   stock1Owned.textContent = stockData[0].owned + " shares";
   stock2Owned.textContent = stockData[1].owned + " shares";
@@ -1278,8 +1216,6 @@ rangeData.addEventListener('input', function() {
   }else if(marketFunds.some(obj => obj.industry === what[0])){
     temp = findMarketFundsByIndustry(what[0]);
     orderCost.textContent = "$" + this.value * temp.cost;
-  }else{
-    bondsOperations();
   }
 });
 
@@ -1302,8 +1238,6 @@ execute.addEventListener('click', function(){
     stocksOperations(what[0], what[2], what[3]);
   }else if(marketFunds.some(obj => obj.industry === what[0])){
     fundsOperations(what[0], what[2], what[3]);
-  }else{
-    bondsOperations();
   }
   updatePieCharts();
   currentValueSpan.textContent = "0 shares";
@@ -2480,7 +2414,7 @@ nextPeriod.addEventListener('click', function() {
     }else{
       gameResults2.textContent = "This is at a gain of " + percentageChange + "%";
     }
-      gameResults3.textContent = "Overall, you invested in " + numStocksInvested.size + " stocks, " + numFundsInvested.size + " ETFs, and " + numBondsInvested.size + " bonds.";
+      gameResults3.textContent = "Overall, you invested in " + numStocksInvested.size + " stocks, and " + numFundsInvested.size + " ETFs." ;
   }else{
     run();
     for(let i = 0; i < 5; i++){
@@ -2498,8 +2432,10 @@ nextPeriod.addEventListener('click', function() {
   // localStorage.setItem("cash", JSON.stringify(stockData));
   // localStorage.setItem("earnings", JSON.stringify(marketFunds));
   // localStorage.setItem("cash", JSON.stringify(stockNews));
-  // localStorage.setItem("industryNewsWithBondEffect", JSON.stringify(industryNewsWithBondEffect));
 });
 
 run();
 nextPeriod.click();
+selectFund.click();
+selectStock.click();
+console.log(fund1.data.datasets[0].data)
