@@ -518,7 +518,6 @@ const instruction1 = document.getElementById("instruction1");
 const instruction2 = document.getElementById("instruction2");
 const instruction3 = document.getElementById("instruction3");
 const instruction4 = document.getElementById("instruction4");
-const ready = document.getElementById("Ready?");
 
 const restart = document.getElementById("restart");
 const startWindow = document.getElementById("startWindow");
@@ -657,7 +656,6 @@ start.addEventListener('click', function(){
     }
   }else if(instruction3.classList.contains("d-block")){
     start.textContent = "Start";
-    ready.textContent = "Are You Ready? Goodluck!";
     toggleVisibility(instruction3);
     toggleVisibility(instruction4);
   }else if(instruction1.classList.contains("d-block")){
@@ -673,7 +671,6 @@ restart.addEventListener('click', function(){
   toggleVisibility(instruction1);
   toggleVisibility(instruction4);
   start.textContent = "Next";
-  ready.textContent = "";
   endWindow.classList.add("d-none");
   endWindow.classList.remove("d-block");
   startWindow.classList.remove("d-none");
